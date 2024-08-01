@@ -1,0 +1,12 @@
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\obj\Debug\Hands.Common.csproj.CoreCompileInputs.cache
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\bin\Debug\Hands.Common.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\bin\Debug\Hands.Common.pdb
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\bin\Debug\Hands.Data.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\bin\Debug\EntityFramework.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\bin\Debug\TrackableEntities.Common.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\bin\Debug\Hands.Data.pdb
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\bin\Debug\Hands.Data.dll.config
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\obj\Debug\Hands.Common.csproj.CopyComplete
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\obj\Debug\Hands.Common.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\obj\Debug\Hands.Common.pdb
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Common\obj\Debug\Hands.Common.csproj.AssemblyReference.cache
