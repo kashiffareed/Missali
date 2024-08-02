@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Hands.WebAPI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="GoogleApplicationId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">AAAAn21OnYc:APA91bHFVPFzjZI2Ozwrrkg3f8At3PnMCD6zfW0fOTwlwz1ZEjS7n8AUh8FlMuD_EMnW_8fR6zMAEAgLJLjcdRLfSFtSYIpuyvrAVPwWM379Qz7bDOEpQf8skGd5sdyyjY4ulfXItQ8z5fdtWKGvQj7FnSQ6IZkb1A</Value>
+    </Setting>
+    <Setting Name="ProjectId" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
