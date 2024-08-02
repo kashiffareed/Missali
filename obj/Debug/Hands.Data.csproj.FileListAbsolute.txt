@@ -1,0 +1,107 @@
+D:\ProjectsDevelopment\Hands\Hands.Data\bin\Debug\Hands.Data.dll.config
+D:\ProjectsDevelopment\Hands\Hands.Data\bin\Debug\Hands.Data.dll
+D:\ProjectsDevelopment\Hands\Hands.Data\bin\Debug\Hands.Data.pdb
+D:\ProjectsDevelopment\Hands\Hands.Data\bin\Debug\EntityFramework.dll
+D:\ProjectsDevelopment\Hands\Hands.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\ProjectsDevelopment\Hands\Hands.Data\bin\Debug\EntityFramework.xml
+D:\ProjectsDevelopment\Hands\Hands.Data\bin\Debug\EntityFramework.SqlServer.xml
+D:\ProjectsDevelopment\Hands\Hands.Data\obj\Debug\Hands.Data.csproj.CoreCompileInputs.cache
+D:\ProjectsDevelopment\Hands\Hands.Data\obj\Debug\Hands.Data.csproj.CopyComplete
+D:\ProjectsDevelopment\Hands\Hands.Data\obj\Debug\Hands.Data.dll
+D:\ProjectsDevelopment\Hands\Hands.Data\obj\Debug\Hands.Data.pdb
+D:\ProjectsDevelopment\Hands\Hands.Data\obj\Debug\Hands.Data.csprojAssemblyReference.cache
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\Hands.Data.dll.config
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\Hands.Data.dll
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\Hands.Data.pdb
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\CommonServiceLocator.dll
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\LinqKit.dll
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\TrackableEntities.Common.dll
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\TrackableEntities.EF.6.dll
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\Urf.Repository.Pattern.dll
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\Urf.Repository.Pattern.Ef6.dll
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\LinqKit.xml
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\TrackableEntities.Common.xml
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\bin\Debug\TrackableEntities.EF.6.xml
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\obj\Debug\Hands.Data.csproj.CoreCompileInputs.cache
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\obj\Debug\Hands.Data.csproj.CopyComplete
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\obj\Debug\Hands.Data.dll
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\obj\Debug\Hands.Data.pdb
+D:\ProjectsDevelopment\Hands\HandsWeb\Hands.Data\obj\Debug\Hands.Data.csprojAssemblyReference.cache
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\Hands.Data.dll.config
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\Hands.Data.dll
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\Hands.Data.pdb
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\CommonServiceLocator.dll
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\LinqKit.dll
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\TrackableEntities.Common.dll
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\TrackableEntities.EF.6.dll
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\Urf.Repository.Pattern.dll
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\Urf.Repository.Pattern.Ef6.dll
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\LinqKit.xml
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\TrackableEntities.Common.xml
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\bin\Debug\TrackableEntities.EF.6.xml
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\obj\Debug\Hands.Data.csproj.CoreCompileInputs.cache
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\obj\Debug\Hands.Data.csproj.CopyComplete
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\obj\Debug\Hands.Data.dll
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\obj\Debug\Hands.Data.pdb
+E:\LocalTFSProjects\HANDSMISALI\Hands.Data\obj\Debug\Hands.Data.csprojAssemblyReference.cache
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\bin\Debug\Hands.Data.dll.config
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\bin\Debug\Hands.Data.dll
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\bin\Debug\Hands.Data.pdb
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\bin\Debug\CommonServiceLocator.dll
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\bin\Debug\LinqKit.dll
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\bin\Debug\Urf.Repository.Pattern.dll
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\bin\Debug\Urf.Repository.Pattern.Ef6.dll
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\bin\Debug\LinqKit.xml
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\obj\Debug\Hands.Data.csprojAssemblyReference.cache
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\obj\Debug\Hands.Data.csproj.CoreCompileInputs.cache
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\obj\Debug\Hands.Data.csproj.CopyComplete
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\obj\Debug\Hands.Data.dll
+D:\DevelopmentProjectsGit\DigitrendsProjects\Misaali\Hands.Data\obj\Debug\Hands.Data.pdb
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.dll.config
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.dll
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.pdb
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\CommonServiceLocator.dll
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\LinqKit.dll
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Urf.Repository.Pattern.dll
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Urf.Repository.Pattern.Ef6.dll
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\LinqKit.xml
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.csproj.CopyComplete
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.dll
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.pdb
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.dll.config
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.dll
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.pdb
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\CommonServiceLocator.dll
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\LinqKit.dll
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Urf.Repository.Pattern.dll
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Urf.Repository.Pattern.Ef6.dll
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\LinqKit.xml
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.dll
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.pdb
+\\192.168.100.105\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.csprojAssemblyReference.cache
+P:\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.csprojResolveAssemblyReference.cache
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.dll.config
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.dll
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Hands.Data.pdb
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\CommonServiceLocator.dll
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\LinqKit.dll
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Urf.Repository.Pattern.dll
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\Urf.Repository.Pattern.Ef6.dll
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\bin\Debug\LinqKit.xml
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.csprojAssemblyReference.cache
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.csproj.CopyComplete
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.dll
+\\DT-DOTNET\.NET Projects\Digitrend Projects\HANDS MISALI\Hands.Data\obj\Debug\Hands.Data.pdb
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\bin\Debug\Hands.Data.dll.config
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\bin\Debug\Hands.Data.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\bin\Debug\Hands.Data.pdb
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\bin\Debug\CommonServiceLocator.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\bin\Debug\LinqKit.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\bin\Debug\Urf.Repository.Pattern.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\bin\Debug\Urf.Repository.Pattern.Ef6.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\bin\Debug\LinqKit.xml
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\obj\Debug\Hands.Data.csproj.CoreCompileInputs.cache
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\obj\Debug\Hands.Data.csproj.CopyComplete
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\obj\Debug\Hands.Data.dll
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\obj\Debug\Hands.Data.pdb
+D:\DevelopmentProjectGit\Digitrends Projects\Missali\Hands.Data\obj\Debug\Hands.Data.csproj.AssemblyReference.cache
