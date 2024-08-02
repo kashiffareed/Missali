@@ -1,0 +1,226 @@
+﻿@model Hands.Data.HandsDB.ClientChecklist
+@{
+    ViewBag.Title = "View";
+    Layout= "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f26;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+        padding-left: 14px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="form-horizontal" style="    padding-left: 14px;">
+
+                    <h4 class="titlehead">Veiw Clien Checklist </h4>
+
+                    <h2 class="titlehead">What was the reason visiting this facility today?</h2>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.Label("Get information and/or counseling about a contraceptive method", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.GetInformation, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Receive, get prescribed or referred for a contraceptive method for the first time or for the first time at this site", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ReceivePrescribed, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Restart contraceptive method use (after not using for 6 months or more)", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.RestartContraceptiveMethod, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Get supplies for method already using or have a routine follow-up visit for method already using", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.GetSupplier, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Switch contraceptive methods or restart a different method (after not using for less than 6 months)", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.SwitchContraceptiveMethod, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Discuss a problem (side effect/ complications) about contraceptive method that you are currently using", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DiscussAProblem, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Other, non-family planning", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.OtherNonFamily, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <h2 class="titlehead">Indicator 1: <br />Support in decision making</h2>
+
+
+                    <div class="form-group">
+                        @Html.Label("Did you receive any method today? Name of the method:", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ReceivedMethodOfChoice, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Did the provider offer options of FP methods before the decision of current method?", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DropDownMethodsName, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Did you receive your method of choice?", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ReceivedMethodOfChoice, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <h2 class="titlehead">Indicator 2: <br />Appropriate Information about FP methods</h2>
+                    <div class="form-group">
+                        @Html.Label("For the method you just decided to accept, did the provider: Explain to you how to use the method effectively?", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ForTheMethodYouJustAccept, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Did the provider describe possible side effects of your adopted method?", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ProviderDescribeSideEffects, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("If yes, name few side effects?", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NameSideEffects, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <h2 class="titlehead">LHV Kit Functional </h2>
+                    <div class="form-group">
+                        @Html.Label("Tell you what to do if you have any problem?", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.WhatToDoIfProblem, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Were you told when to return for follow up visit?", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.WhenFolloupVisit, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <h2 class="titlehead">Indicator 3: <br />Satisfaction of clients about services</h2>
+
+                    <div class="form-group">
+                        @Html.Label("Did you feel comfortable to ask questions during the session?", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.FeelComfortableToAskQuestions, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Do you feel the information given to you during your visit today was too little, too much, or just about right?", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DidYouFeelInformation, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Did you have enough privacy during your exam?", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DidYouHaveEnoughPrivacy, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("During your visit to the clinic how were you treated by the provider?", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DuringVisitTreated, new { @class = "form-control", maxlength = "3", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Do the provider encourage you to ask any question about your health and FP methods?", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ProviderEncourage, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Was your FP need, Spacing or for limiting", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.FpNeedSpacing, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("After adopting FP method are you satisfied?", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.AdoptingFpMethod, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                            <a href="~/ClientCheckList/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+

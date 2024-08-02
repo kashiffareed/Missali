@@ -1,0 +1,31 @@
+﻿@model List<Hands.Data.HandsDB.GetBlmisSalesByMonthReturnModel>
+
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+
+                <th scope="col">MARVI NAME</th>
+                <th scope="col">Monthly Sale Date</th>
+                <th scope="col">Monthly Sale</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>@item.full_name</td>
+                    <td>@item.SellDate</td>
+                    <td>@item.Amount.ToString("N2") Rs</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td>@Model.Sum(i => i.Amount).ToString("N2") Rs</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

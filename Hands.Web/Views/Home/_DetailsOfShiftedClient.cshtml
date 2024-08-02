@@ -1,0 +1,47 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+<h2 class="text">Shifted To</h2>
+<div class="table-scroll" style="height: auto;">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col"></th>
+                <th scope="col">CONDOM</th>
+                <th scope="col">INJECTION</th>
+                <th scope="col">IUCD</th>
+                <th scope="col">PILLS</th>
+                <th scope="col">TL</th>
+                <th scope="col">TOTAL</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model.spTestDetailsOfShiftedClients)
+            {
+                <tr class="table-secondary">
+                    <td>@item.Product</td>
+                    <td>@item.Condom</td>
+                    <td>@item.Injection</td>
+                    <td>@item.IUCD</td>
+                    <td>@item.Pills</td>
+                    <td>@item.TL</td>
+                    <td>@item.Total</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>TOTAL</td>
+                <td>@Model.spTestDetailsOfShiftedClients.Sum(i => i.Condom)</td>
+                <td>@Model.spTestDetailsOfShiftedClients.Sum(i => i.Injection)</td>
+                <td>@Model.spTestDetailsOfShiftedClients.Sum(i => i.IUCD)</td>
+                <td>@Model.spTestDetailsOfShiftedClients.Sum(i => i.Pills)</td>
+                <td>@Model.spTestDetailsOfShiftedClients.Sum(i => i.TL)</td>
+                <td>@Model.spTestDetailsOfShiftedClients.Sum(i => i.Total)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<h2 class="text1">Shifted From</h2>

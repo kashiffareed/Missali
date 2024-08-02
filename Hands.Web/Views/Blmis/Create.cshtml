@@ -1,0 +1,208 @@
+﻿@using Hands.Common.Common
+@model Hands.ViewModels.Models.BlmisUserStock.BlmisUserStock
+
+@{
+    ViewBag.Title = "Create BLMIS";
+}
+
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.BLMISInventory.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+
+
+
+@*<script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <link href="~/Content/chosen.css" rel="stylesheet" />
+    <link href="~/Content/chosen.min.css" rel="stylesheet" />*@
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f8c;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="" style="    padding: 6px;">
+                    @using (Ajax.BeginForm("Create", "Blmis",
+new AjaxOptions
+{
+LoadingElementId = "resultLoadingDiv",
+InsertionMode = InsertionMode.Replace,
+OnBegin = "ShowProcessingMsg",
+OnComplete = "HideProcessingMsg",
+OnSuccess = "success",
+UpdateTargetId = "TargeDiv"
+
+},
+new { @id = "loginForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.ProjectId)
+
+                        <div class="form-horizontal" style="    padding-left: 14px;">
+                            <h4 class="titlehead">Create BLMIS Marvi Inventory</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @{
+                                var productSelectListItems = Model.ProductBlmisList.Select(product => new SelectListItem { Text = product.ProductName, Value = product.ProductId.ToString() }).ToList();
+                                productSelectListItems.Add(new SelectListItem { Text = "Other", Value = "010" });
+                            }
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Product</label>
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.ProductId, productSelectListItems, "Select", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group" id="InsertProductName" style="display: none">
+                                <label class="control-label col-md-2">Product Name</label>
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                                </div>
+                                <label id="errorlabel" class="text-danger"></label>
+                            </div>
+                            
+                            <div class="form-group">
+                                @Html.Label("Measurement Unit", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+
+                                    @Html.DropDownListFor(x=>x.Unit, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="kg", Value = "kg" },
+                                        new SelectListItem{ Text="liter", Value = "liter" },
+                                        new SelectListItem{ Text="piece", Value = "piece" },
+                                        new SelectListItem{ Text="dozen",Value = "dozen" }
+                                    },new { @class = "form-control" })
+
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Unit, "", new { @class = "text-danger" })
+                            </div>
+                           
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Marvi Name</label>
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.UserId, new SelectList(Model.UserList, "AppUserId", "FullName"), "Select", new { @class = "form-control", id = "marvidrop" })
+                                    @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                                    <input type="submit" value="Save" class="edit-button btn btn-primary top-button" />
+                                    <a href="~/Blmis/index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div id="resultLoadingDiv" hidden class="popup">
+                            <img src="~/Content/Images/abc.gif" />
+                            @*<img taluqaId="image" src="~/Content/Images/ajax-loader.gif"/>*@
+                        </div>
+
+                    }
+
+
+                </div>
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#Unit").prop('required', true);
+    });
+
+    $(function () {
+        $('#marvidrop').chosen();
+    });
+
+    $("#ProductId").change(function () {
+        var productId = $(this).val();
+        if (productId == "010") {
+            $('#InsertProductName').slideDown();
+            $('#ProductName').attr('required', 'required');
+        } else {
+            $('#InsertProductName').slideUp();
+            $('#ProductName').removeAttr('required', 'required');
+        }
+    });
+
+    function ShowProcessingMsg() {
+        $('#resultLoadingDiv').removeAttr('hidden');
+
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+    function success() {
+        swal("Successful!", "Your record has been successfully saved!", "success");
+    }
+
+
+
+</script>
+
+
+
+

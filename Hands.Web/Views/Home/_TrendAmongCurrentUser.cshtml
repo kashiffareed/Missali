@@ -1,0 +1,49 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">LHV</th>
+                <th scope="col">INJECTION</th>
+                <th scope="col">IUCD</th>
+                <th scope="col">NATURAL</th>
+                <th scope="col">CONDOM</th>
+                <th scope="col">PILLS</th>
+                <th scope="col">IMPLANT</th>
+                <th scope="col">TL</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model.SpTrendAmongCurrentUsers)
+            {
+                <tr class="table-secondary">
+                    <td>@item.lhvName</td>
+                    <td>@item.Injection</td>
+                    <td>@item.IUCD</td>
+                    <td>@item.Natural</td>
+                    <td>@item.Condom</td>
+                    <td>@item.Pills</td>
+                    <td>@item.Implant</td>
+                    <td>@item.TL</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>TOTAL</td>
+                <td>@Model.SpTrendAmongCurrentUsers.Sum(i => int.Parse(i.Injection))</td>
+                <td>@Model.SpTrendAmongCurrentUsers.Sum(i => int.Parse(i.IUCD))</td>
+                <td>@Model.SpTrendAmongCurrentUsers.Sum(i => int.Parse(i.Natural))</td>
+                <td>@Model.SpTrendAmongCurrentUsers.Sum(i => int.Parse(i.Condom))</td>
+                <td>@Model.SpTrendAmongCurrentUsers.Sum(i => int.Parse(i.Pills))</td>
+                <td>@Model.SpTrendAmongCurrentUsers.Sum(i => int.Parse(i.Implant))</td>
+                <td>@Model.SpTrendAmongCurrentUsers.Sum(i => int.Parse(i.TL))</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

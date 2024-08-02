@@ -1,0 +1,35 @@
+﻿@model List<Hands.Data.HandsDB.SpAliveChildReturnModel>
+
+
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+        <tr class="table-dark">
+            <th scope="col">ALIVE CHILDERN</th>
+            <th scope="col">MWRA's</th>
+            @*<th scope="col">CURRENT USERS</th>*@
+            <th scope="col">TOTAL FP USER</th>
+        </tr>
+        </thead>
+        <tbody class=" table-hover">
+        @foreach (var item in Model)
+        {
+            <tr class="table-secondary">
+                <td>@item.no_of_alive_children</td>
+                <td>@item.mwraCount</td>
+                @*<td>@item.CurrentUserCount</td>*@
+                <td>@item.NewUserCount</td>
+
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>TOTAL</td>
+            <td>@Model.Sum(i => i.mwraCount)</td>
+            @*<td>@Model.Sum(i => i.CurrentUserCount)</td>*@
+            <td>@Model.Sum(i => i.NewUserCount)</td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

@@ -1,0 +1,30 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">MODERN METHOD</th>
+                <th scope="col">ADDITIONAL USERS</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model.SpNewUserMethodWiseByRegionId)
+            {
+                <tr class="table-secondary">
+                    <td>@item.product_name</td>
+                    <td>@item.NewUser</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td>@Model.SpNewUserMethodWiseByRegionId.Sum(i => i.NewUser)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

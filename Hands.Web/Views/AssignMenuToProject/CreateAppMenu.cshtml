@@ -1,0 +1,214 @@
+﻿@model Hands.ViewModels.Models.AssignMenuToApp.AssignMenuToAppViewModel
+@{
+    ViewBag.Title = "Assign Menu to Projects";
+}
+
+<noscript>
+    <link rel="stylesheet" href="~/jQuery-File-Upload-9.11.2/css/jquery.fileupload-noscript.css">
+</noscript>
+<noscript>
+    <link rel="stylesheet" href="~/jQuery-File-Upload-9.11.2/css/jquery.fileupload-ui-noscript.css">
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+
+<script type="text/javascript">
+    var dd ;
+    $(
+        function() {
+            $('#jstree_demo_div') // listen for event
+                .on('changed.jstree', function (e, data) {
+                    var i, j, r = [];
+                    for(i = 0, j = data.selected.length; i < j; i++) {
+                        r.push(data.instance.get_node(data.selected[i]).id);
+                    }
+                    dd = "";
+                    dd=r;
+                })
+                .jstree({ 'core' : {
+                        'data' :  @Html.Action("AppMenuCategoryHierarchy")
+                    }, "checkbox": {
+                        "whole_node" :true,
+                        "keep_selected_style": true,
+                        "cascade": "down",
+                        "three_state": true,
+                        "two_state": false
+                    },
+                    "plugins": ["checkbox"]
+                });
+        }
+    );
+</script>
+
+@using (Html.BeginForm("CreateAppMenu", "AssignMenuToProject", FormMethod.Post, new { enctype = "multipart/form-data", id = "multiprojectModel" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.ProjectId);
+
+    <div class="form-group">
+        @Html.Label("Project Name", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control validation", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })
+        </div>
+        <label id="errorlabel" class="text-danger"></label>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("App Menus", new { @class = "control-label col-md-2" })
+        <div id="jstree_demo_div"></div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Application Image", new { @class = "control-label col-md-2" })
+
+        <div class="col-md-3">
+            <input type="file" name="file" class="form-control" id="file" accept="image/jpeg" />
+            <br />
+            <div id="preview"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Primary Color", new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+
+            <div id="color-picker-rgb1" class="input-group colorpicker-component">
+                <input type="text" value="#05FF44" class="form-control" id="PrimaryColor" />
+                <span class="input-group-addon"><i style="height: 37px; width: 37px;"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Secoundary Color", new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            <div id="color-picker-rgb2" class="input-group colorpicker-component">
+                <input type="text" value="#05FF44" class="form-control" id="SecoundaryColor" />
+                <span class="input-group-addon"><i style="height: 37px; width: 37px;"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+            <input type="button" id="submit" value="Save" class="edit-button btn btn-primary top-button" />
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+}
+
+<script type="text/javascript">
+
+    $("#submit").on('click',
+        function() {
+            debugger;
+
+            var values = $('#jstree_demo_div').jstree("get_selected", true);
+            var theIds = JSON.stringify(values);
+            var ProjectId = $('#ProjectId').val();
+            var PrimaryColor = $('#PrimaryColor').val();
+            var SecoundaryColor = $('#SecoundaryColor').val();
+
+            var formdata = new FormData(); //FormData object
+            var fileInput = document.getElementById('file');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+                //Appending each file to FormData object
+                formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            }
+            formdata.append('theIds', theIds);
+            formdata.append('ProjectId', ProjectId);
+            formdata.append('PrimaryColor', PrimaryColor);
+            formdata.append('SecoundaryColor', SecoundaryColor);
+
+
+            //Creating an XMLHttpRequest and sending
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'Upload');
+            xhr.send(formdata);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    window.location.href = '@Url.Action("Index", "AssignMenuToProject")';
+                }
+            }
+            return false;
+
+
+
+
+            @*var values = $('#jstree_demo_div').jstree("get_selected", true);
+            var theIds = JSON.stringify(values);
+            var ProjectId = $('#ProjectId').val();
+            var PrimaryColor = $('#PrimaryColor').val();
+            var SecoundaryColor = $('#SecoundaryColor').val();
+
+            if ($('#multiprojectModel').valid()) {
+                var projectId = $('#ProjectId').val();
+                var PrimaryColor = $('#PrimaryColor').val();
+                var SecoundaryColor = $('#SecoundaryColor').val();
+
+                $.ajax({
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    dataType: "JSON",
+                    url: '@Url.Action("CreateAppMenu")', // the method we are calling
+
+                    //data: { data1: theIds, ProjectId: ProjectId, PrimaryColor: PrimaryColor, SecoundaryColor: SecoundaryColor, HeadingColor: HeadingColor, SubHeadingColor: SubHeadingColor },
+                    data: { data1: theIds, projectId: projectId, PrimaryColor: PrimaryColor, SecoundaryColor: SecoundaryColor, file: data },
+                    success: function (result) {
+                        window.location.assign("/AssignMenuToProject/Index");
+                    },
+                    error: function (result) {
+                        alert('something went wrong');
+                    }
+                });
+            }*@
+        });
+
+</script>
+
+
+<script>
+
+    $('#file').change(function () {
+
+        readURL1(this);
+    });
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+            reader.onloadend = function (video) {
+                if (input.files[0].type.match('image')) {
+
+                    $("#preview").html("<img src= " + video.target.result + " height=200 width=200 />");
+                    $('#preview').css('display', 'inline');
+                } 
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+
+<script>
+
+    $(function () {
+        $('#color-picker-rgb1').colorpicker({
+            color: '#05FF44',
+            format: 'hex'
+        });
+    });
+
+    $(function () {
+        $('#color-picker-rgb2').colorpicker({
+            color: '#05FF44',
+            format: 'hex'
+        });
+    });
+
+</script>

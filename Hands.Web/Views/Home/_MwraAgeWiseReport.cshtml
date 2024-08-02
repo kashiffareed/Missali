@@ -1,0 +1,44 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">AGE</th>
+                <th scope="col">MWRA's</th>
+                <th scope="col">CONTINUED USERS</th>
+                <th scope="col">TOTAL FP USERS</th>
+                <th scope="col">UNMET NEED</th>
+                <th scope="col">ADDITIONAL USERS UNMET NEED</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model.AgeWiseReportList)
+            {
+                <tr class="table-secondary">
+                    <td>@item.ageGroup</td>
+                    <td>@item.MWRA</td>
+                    <td>@item.CurrentUsers</td>
+                    <td>@item.NewUsers</td>
+                    <td>@item.UnmetNeed</td>
+                    <td>@item.NewUserUnmetNeed</td>
+
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>TOTAL</td>
+                <td>@Model.AgeWiseReportList.Sum(i => i.MWRA)</td>
+                <td>@Model.AgeWiseReportList.Sum(i => i.CurrentUsers)</td>
+                <td>@Model.AgeWiseReportList.Sum(i => i.NewUsers)</td>
+                <td>@Model.AgeWiseReportList.Sum(i => i.UnmetNeed)</td>
+                <td>@Model.AgeWiseReportList.Sum(i => i.NewUserUnmetNeed)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

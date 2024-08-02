@@ -1,0 +1,87 @@
+﻿@model Hands.ViewModels.Models.ClmisDashboard.ClmisDashboard
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title ">CLMIS LHV Dashboard</h3>
+        </div>
+        @*<div>
+                <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+                    <span class="m-subheader__daterange-label">
+                        <span class="m-subheader__daterange-title"></span>
+                        <span class="m-subheader__daterange-date m--font-brand"></span>
+                    </span>
+                    <a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+                        <i class="la la-angle-down"></i>
+                    </a>
+                </span>
+            </div>*@
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <!--begin:: Widgets/Best Sellers-->
+        <div class="m-portlet m-portlet--full-height ">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text"></h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="m-portlet__body">
+                <!--begin::Content-->
+                <div class="tab-content">
+
+                    <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-scrollbar-shown="true" data-scrollable="true" data-max-height="380" style="overflow: visible; height: 380px; max-height: 380px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div>
+                            <table class="table table-bordered table table-hover ">
+                                <thead>
+                                    <tr class="table-dark">
+                                        <th scope="col">NAME</th>
+                                        <th scope="col">PILLS</th>
+                                        <th scope="col">INJECTIONS</th>
+                                        <th scope="col">IUCD</th>
+                                        <th scope="col">CONDOMS</th>
+                                        <th scope="col">IMPLANTS</th>
+                                        <th scope="col">TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.ClmisDashboardlist)
+                                {
+                                    <tr class="table-secondary">
+                                        <td>@item.full_name</td>
+                                        <td>@item.Pills</td>
+                                        <td>@item.Injection</td>
+                                        <td>@item.IUCD</td>
+                                        <td>@item.Condoms</td>
+                                        <td>@item.Implants</td>
+                                        <td style="color: #c30808;fonnt-weight: 863;font-weight: 700;">@((item.Pills + item.Injection + item.IUCD + item.Condoms + item.Implants))</td>
+
+                                    </tr>
+                                }
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+
+                </div>
+                <!--end::Content-->
+            </div>
+        </div>
+        <!--end:: Widgets/Best Sellers-->
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+<div class="table-scroll"> 
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">LHV</th>
+                <th scope="col">ADDITIONAL USERS</th>
+            </tr>
+        </thead>
+
+        <tbody class=" table-hover">
+            @foreach (var item in Model.NewUserCurrentMonthsByAllRegions)
+            {
+                <tr class="table-secondary">
+                    <td>@item.Users</td>
+                    <td>@item.CurrentMonthUser</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>TOTAL</td>
+                <td>@Model.NewUserCurrentMonthsByAllRegions.Sum(i => i.CurrentMonthUser)</td>
+            </tr>
+        </tfoot>
+
+    </table>
+</div>

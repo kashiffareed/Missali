@@ -1,0 +1,52 @@
+﻿@model List<Hands.Data.HandsDB.NewUserEachLhvByRegionIdReturnModel>
+
+
+<script>
+    function NewUserForEachLhv() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", 'LHV','style');
+        data.addColumn("number", "No. of Additional Users");
+        data.addRows([
+            @{
+                    for (var i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                        if (i == Model.Count - 1)
+                        {
+                            @Html.Raw(string.Format("['{0}', {1}]", item.newUser, item.Total_New_User))
+                        }
+                        else
+                        {
+                            @Html.Raw(string.Format("['{0}', {1}],", item.newUser, item.Total_New_User))
+                        }
+                    }
+                }
+        ]);
+    var options = {
+        hAxis: {
+            title: "LHV",
+            textStyle: { color: '2761c4', fontSize: '10' }
+        },
+        vAxis: {
+
+            textStyle: { color: '2761c4', fontSize: '15' }
+        },
+        legend: { position: 'top', alignment: 'start' },
+
+        colors: ['#27b0c4'],
+
+        bar: {
+            groupWidth: '50%'
+        }
+    };
+        var material = new google.visualization.ColumnChart(document.getElementById("newUserForEachLhvPartial"));
+    material.draw(data, options);
+    }
+
+</script>
+
+
+<script>
+    google.charts.setOnLoadCallback(NewUserForEachLhv);
+</script>

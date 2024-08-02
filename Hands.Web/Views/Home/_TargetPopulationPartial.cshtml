@@ -1,0 +1,37 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">AREA</th>
+                <th scope="col">MWRA's</th>
+                <th scope="col">TOTAL POPULATION</th>
+                <th scope="col">NO OF HOUSE HOLDS</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model.TargetPopuplationList)
+            {
+                <tr class="table-secondary">
+                    <td>@item.taluqa_name</td>
+                    <td>@item.Mwras</td>
+                    <td>@item.TotalPopulation</td>
+                    <td>@item.noOfHouseHolds</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>TOTAL</td>
+                <td>@Model.TargetPopuplationList.Sum(i => i.Mwras)</td>
+                <td>@Model.TargetPopuplationList.Sum(i => i.TotalPopulation)</td>
+                <td>@Model.TargetPopuplationList.Sum(i => i.noOfHouseHolds)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

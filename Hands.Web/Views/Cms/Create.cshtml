@@ -1,0 +1,377 @@
+﻿@using Hands.Common.Common
+@model Hands.ViewModels.Models.Cms.cms
+
+@{
+    ViewBag.Title = "Create CMS";
+}
+
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.CMS.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f8c;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="" style="    padding: 6px;">
+                    @*@using (Ajax.BeginForm("Create", "Cms",
+                        new AjaxOptions
+                        {
+                            LoadingElementId = "resultLoadingDiv",
+                            InsertionMode = InsertionMode.Replace,
+                            OnBegin = "ShowProcessingMsg",
+                            OnComplete = "HideProcessingMsg",
+                            OnSuccess = "success",
+                            UpdateTargetId = "TargeDiv",
+                        HttpMethod = "POST"
+
+
+                        },
+                        new {   enctype = "multipart/form-data" }))*@
+                    @using (Html.BeginForm("Create", "Cms", FormMethod.Post, new { enctype = "multipart/form-data", id = "Cms" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal" style="    padding-left: 14px;">
+                        <h4 class="titlehead">Content Management</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @{
+                            var categorySelectListItems = Model.CategoryList.Select(r => new SelectListItem { Text = r.CategoryName, Value = r.CategoryId.ToString() }).ToList();
+                        }
+                        <div class="form-group">
+                            @Html.Label("Category", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownListFor(f => f.CategoryId, categorySelectListItems, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Title(English)", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.ContentName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContentName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Title (Urdu)", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.ContentNameUrdu, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContentNameUrdu, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Title (Sindhi)", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.ContentNameSindhi, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContentNameSindhi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Attachment (English)", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-6">
+                                <input type="file" name="file" class="form-control" id="imgInp" accept="audio/mp3,video/mp4,image/jpeg" />
+                                <br />
+                                <div id="preview"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.Label("Content Type", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+
+                                @Html.DropDownListFor(x=>x.ContentType, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Select", Value = "" },
+                                    new SelectListItem{ Text="Image", Value = "image" },
+                                    new SelectListItem{ Text="Video", Value = "video" },
+                                    new SelectListItem{ Text="Pdf", Value = "pdf" },
+                                    new SelectListItem{ Text="Ppt", Value = "ppt" },
+                                    new SelectListItem{ Text="Audio", Value = "audio" },
+                                },new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContentType, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Thumbnail", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-6">
+                                <input type="file" name="file1" class="form-control" id="ThumbimgInp" accept="image/jpeg" />
+                                <br />
+                                <div id="preview1"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                                <input type="submit" value="Save" id="submitform" class="edit-button btn btn-primary top-button" />
+                                <a href="~/Cms/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                            </div>
+
+                        </div>
+
+                        <div id="resultLoadingDiv" hidden class="popup">
+                            <img src="~/Content/Images/abc.gif" />
+                            @*<img taluqaId="image" src="~/Content/Images/ajax-loader.gif"/>*@
+                        </div>
+                    </div>
+                    }
+
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    function ShowProcessingMsg() {
+        $('#resultLoadingDiv').removeAttr('hidden');
+
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+    function success() {
+        swal("Successful!", "Your record has been successfully saved!", "success");
+    }
+
+
+    $("#submitform").click(function () {
+
+        if ($('#Cms').valid()) {
+            ShowProcessingMsg();
+        }
+    });
+</script>
+
+<script>
+
+    $('#imgInp').change(function () {
+        debugger
+        readURL1(this);
+    });
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+            reader.onloadend = function (video) {
+                if (input.files[0].type.match('image')) {
+
+                    $("#preview").html("<img src= " + video.target.result + " height=200 width=200 />");
+
+
+                    //$("#preview-video-thumb").attr("src", "");
+                    //$("#preview-thumb").attr("src", video.target.result);
+                    $('#preview').css('display', 'inline');
+
+                } else {
+                    $("#preview").html(" <video  id=previewvideo src = " + video.target.result + "  height=200 width=200 ></video>");
+
+                    //$("#preview-video-thumb").attr("src", video.target.result);
+                    //$("#preview-thumb").attr("src", "");
+                    $("#preview").css('display', 'inline');
+
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
+
+
+        }
+
+    }
+
+    $('#ThumbimgInp').change(function () {
+        debugger
+        readURL2(this);
+    });
+    function readURL2(input) {
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+            reader.onloadend = function (video) {
+                if (input.files[0].type.match('image')) {
+
+                    $("#preview1").html("<img src= " + video.target.result + " height=200 width=200 />");
+
+
+                    //$("#preview-video-thumb").attr("src", "");
+                    //$("#preview-thumb").attr("src", video.target.result);
+                    $('#preview1').css('display', 'inline');
+
+                } else {
+                    $("#preview1").html(" <video  id=previewvideo src = " + video.target.result + "  height=200 width=200 ></video>");
+
+                    //$("#preview-video-thumb").attr("src", video.target.result);
+                    //$("#preview-thumb").attr("src", "");
+                    $("#preview1").css('display', 'inline');
+
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
+
+
+        }
+
+    }
+
+
+
+    //function readURL112(input) {
+    //
+    //    //if (img.id == "thumnail") {
+    //    //   $("#blah").remove(img.id);
+    //    // } else {
+
+    //    if (input.files && input.files[0]) {
+
+    //        var file = event.target.files[0];
+    //        var fileReader = new FileReader();
+    //        if (file.type.match('image')) {
+    //            fileReader.onload = function () {
+    //
+    //                var img = document.createElement('img');
+    //                img.id = "thumnail";
+    //                img.height = 200;
+    //                img.width = 200;
+
+    //                img.src = fileReader.result;
+
+    //                $('#blah').css('display', 'block');
+    //                // document.getElementsByTagName('blah').appendChild(img);
+    //                $("#blah").append(img);
+    //            };
+    //            fileReader.readAsDataURL(file);
+    //        } else {
+    //            fileReader.onload = function () {
+    //                var blob = new Blob([fileReader.result], { type: file.type });
+    //                var url = URL.createObjectURL(blob);
+    //                var video = document.createElement('video');
+    //                var timeupdate = function () {
+    //                    if (snapImage()) {
+    //                        video.removeEventListener('timeupdate', timeupdate);
+    //                        video.pause();
+    //                    }
+    //                };
+    //                video.addEventListener('loadeddata', function () {
+    //                    if (snapImage()) {
+    //                        video.removeEventListener('timeupdate', timeupdate);
+    //                    }
+    //                });
+    //                var snapImage = function () {
+    //                    var canvas = document.createElement('canvas');
+    //                    canvas.width = video.videoWidth;
+    //                    canvas.height = video.videoHeight;
+    //                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    //                    var image = canvas.toDataURL();
+    //                    var success = image.length > 100000;
+    //                    if (success) {
+    //                        var img = document.createElement('img');
+    //                        img.src = image;
+
+    //                        img.id = "thumnail";
+    //                        img.height = 200;
+    //                        img.width = 200;
+
+
+    //                        $('#blah').css('display', 'block');
+
+    //                        // document.getElementsByTagName('blah')[0].appendChild(img);
+    //                        $("#blah").append(img);
+    //                        URL.revokeObjectURL(url);
+    //                    }
+    //                    return success;
+    //                };
+    //                video.addEventListener('timeupdate', timeupdate);
+    //                video.preload = 'metadata';
+    //                video.src = url;
+    //                // Load video in Safari / IE11
+    //                video.muted = true;
+    //                video.playsInline = true;
+    //                video.play();
+    //            };
+    //            fileReader.readAsArrayBuffer(file);
+    //        }
+
+    //        //var reader = new FileReader();
+
+    //        //reader.onload = function (e) {
+    //        //    $('#blah').css('display', 'inline');
+    //        //    $('#blah').attr('src', e.target.result);
+    //        //    $('#lbl').text($('input[type=file]').val().split('\\').pop());
+    //        //}
+    //        //reader.readAsDataURL(input.files[0]);
+    //    }
+
+
+
+    //}
+
+
+    //}
+
+
+</script>
+
+<script>
+                //function readURL1(input) {
+
+                //    if (input.files && input.files[0]) {
+                //        var reader2 = new FileReader();
+
+                //        reader2.onload = function (e) {
+                //            $('#blahUrdu').css('display', 'inline');
+                //            $('#blahUrdu').attr('src', e.target.result);
+                //            $('#lblUrdu').text($('input[type=file]').val().split('\\').pop());
+                //        }
+                //        reader2.readAsDataURL(input.files[0]);
+                //    }
+                //}
+
+                //$('#imgInp2').change(function () {
+                //    readURL1(this);
+                //});
+</script>
+
+

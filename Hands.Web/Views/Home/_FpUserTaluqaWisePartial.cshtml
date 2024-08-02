@@ -1,0 +1,38 @@
+﻿@model List<Hands.Data.HandsDB.SpFpUsersTaluqaTehsilwiseReturnModel>
+
+
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">TALUKA</th>
+                <th scope="col">MARVI</th>
+                <th scope="col">CONTINUED USERS</th>
+                <th scope="col">TOTAL FP USER</th>
+                <th scope="col">TOTAL FP USER CURRENT MONTH</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>@item.taluqa_name</td>
+                    <td>@item.NOOR</td>
+                    <td>@item.CurrentUser</td>
+                    <td>@item.NewUser</td>
+                    <td>@item.NewUserCurrentMonth</td>
+
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>TOTAL</td>
+                <td>@Model.Sum(i => i.NOOR)</td>
+                <td>@Model.Sum(i => i.CurrentUser)</td>
+                <td>@Model.Sum(i => i.NewUser)</td>
+                <td>@Model.Sum(i => i.NewUserCurrentMonth)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

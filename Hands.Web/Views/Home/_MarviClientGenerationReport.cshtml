@@ -1,0 +1,34 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">LHV NAME</th>
+                <th scope="col">MARVI NAME</th>
+                <th scope="col">TOTAL FP USER</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model.MarviClientGenerationReportList)
+            {
+                <tr class="table-secondary">
+                    <td>@item.LhvName</td>
+                    <td>@item.MarviName</td>
+                    <td>@item.TotalClient</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>TOTAL</td>
+                <td></td>
+                <td>@Model.MarviClientGenerationReportList.Sum(i => i.TotalClient)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

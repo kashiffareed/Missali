@@ -1,0 +1,61 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">TALUKA</th>
+                <th scope="col">TOTAL FP USERS</th>
+                <th scope="col">CONTINUED USERS</th>
+                <th scope="col">ADDITIONAL USERS</th>
+                <th scope="col">MWRA's</th>
+                <th scope="col">mCPR</th>
+
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+
+
+
+            @foreach (var item in Model.spDetailMcprReturns)
+            {
+                <tr class="table-secondary">
+                    <td>@item.taluqa_name</td>
+                    <td>@item.TotalFpUsers</td>
+                    <td>@item.CurrentUser</td>
+                    <td>@item.NewUser</td>
+                    <td>@item.MWRA</td>
+
+                    @if (item.MWRA != 0 && item.TotalFpUsers != 0)
+                    {
+                        <td>@((((float)item.TotalFpUsers / (float)item.MWRA) * 100).ToString("N2")) %</td>
+
+                    }
+                    else
+                    {
+                        <td>0 %</td>
+                    }
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            @if (Model.spDetailMcprReturns.Count > 0)
+            {
+
+                <tr>
+                    <td>TOTAL</td>
+                    <td>@Model.spDetailMcprReturns.Sum(i => i.TotalFpUsers)</td>
+                    <td>@Model.spDetailMcprReturns.Sum(i => i.CurrentUser)</td>
+                    <td>@Model.spDetailMcprReturns.Sum(i => i.NewUser)</td>
+                    <td>@Model.spDetailMcprReturns.Sum(i => i.MWRA)</td>
+                    <td>@((((Convert.ToDecimal(Model.spDetailMcprReturns.Sum(i => i.TotalFpUsers))) / (Convert.ToDecimal(Model.spDetailMcprReturns.Sum(i => i.MWRA)))) * 100).ToString("N2"))%</td>
+
+                </tr>
+            }
+        </tfoot>
+    </table>
+</div>

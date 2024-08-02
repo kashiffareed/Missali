@@ -1,0 +1,321 @@
+﻿@using Hands.Common.Common
+@model Hands.ViewModels.Models.UserStock.userStock
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.CLMISInventory.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f26;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+        padding-left: 14px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+
+
+                @using (Ajax.BeginForm("Edit", "Clmis",
+                        new AjaxOptions
+                        {
+                            LoadingElementId = "resultLoadingDiv",
+                            InsertionMode = InsertionMode.Replace,
+                            OnBegin = "ShowProcessingMsg",
+                            OnComplete = "HideProcessingMsg",
+                            OnSuccess = "successEdit",
+                            UpdateTargetId = "TargeDiv"
+
+                        },
+                        new { @id = "loginForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.UsersStockId)
+                    @Html.HiddenFor(x=>x.ProjectId)
+                <div class="form-horizontal" style="    padding-left: 14px;">
+
+                    <h4 class="titlehead">Edit CLMIS Management</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                   
+                    
+                    @{
+                        var RegionSelectList = Model.RegionList.Select(r => new SelectListItem { Text = r.RegionName, Value = r.RegionsId.ToString() }).ToList();
+                    }
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Region</label>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(f => f.RegionId, RegionSelectList, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                    
+
+
+                    @{
+                        var productSelectListItems = Model.ProductClmisList.Select(r => new SelectListItem { Text = r.product_name, Value = r.product_id.ToString() }).ToList();
+                    }
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Product</label>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(f => f.ProductId, productSelectListItems, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Quantity", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                        </div>
+                        <label id="errorlabel" class="text-danger"></label>
+                    </div>
+                    @*<div class="form-group">
+                        @Html.Label("Price", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                    <div class="form-group">
+                        @Html.Label("User Type", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+
+                            @Html.DropDownListFor(x=>x.userType, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="Select", Value = "Select" },
+                                new SelectListItem{ Text="LHV", Value = "lhv" },
+                                new SelectListItem{ Text="HCP", Value = "hcp" },
+                            },new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.userType, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group" id="UserDropdown" style="display: none">
+                        <label id="typedrilleddown" class="control-label col-md-2">TYPE</label>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(f => f.UserId, new SelectList(string.Empty, "Value", "Text"), "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                            <input type="submit" value="Save" class="edit-button btn btn-primary top-button" />
+                            <a href="~/Clmis/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                        </div>
+
+                    </div>
+
+                    <div id="resultLoadingDiv" hidden class="popup">
+
+                        <img src="~/Content/Images/abc.gif" />
+                    </div>
+                </div>
+                }
+
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        getUserbyType('@Model.userType', '@Model.UserId','@Model.RegionId');
+        getproductQuantity('@Model.ProductId','@Model.RegionId');
+    });
+    $("#Quantity").blur(function () {
+        debugger;
+        var Quantity = $('#Quantity').val();
+        var RemainingQty = $('#Qty').text();
+        if (parseInt(Quantity) > parseInt(RemainingQty)) {
+            $('#errorlabel').text('Quantity value cannot be grater than' + ' ' + RemainingQty);
+            $('#savebtn').attr('disabled', "disabled");
+        } else {
+            $('#errorlabel').text('');
+            $('#savebtn').removeAttr('disabled', "disabled");
+        }
+
+    });
+
+    $("#ProductId").change(function () {
+      
+        var id = $(this).val();
+        var regid = $('#RegionId').val();
+        getproductQuantity(id, regid);
+    });
+
+
+    function successEdit() {
+        swal("Successful!", "Your record has been successfully updated!", "success");
+    }
+
+
+
+
+    function ShowProcessingMsg() {
+        $('#resultLoadingDiv').removeAttr('hidden');
+
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+
+    $("#userType").change(function () {
+        var id = $(this).val();
+         var regId   =   @Model.RegionId;
+        getUserbyType(id, 0, regId);
+    });
+
+
+    function getUserbyType(id, userid, regId) {
+        debugger;
+        var value = id;
+        var regionid = regId;
+        if (value != "Select") {
+            $("#UserId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetUserByType")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { usertype: value, userId: userid, RegionId: regionid },
+                // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+                success: function (Users) {
+
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    var items = '<option value=0>Select</option>';
+                    var selectedValue;
+                    $.each(Users,
+                        function (i, Users) {
+
+                            if (Users.Selected) {
+                                selectedValue = Users.Value;
+                            }
+
+                            var optionHtml = "<option {selected} value='{value}'>{text}</option>";
+                            optionHtml = optionHtml.replace('{value}', Users.Value);
+                            optionHtml = optionHtml.replace('{text}', Users.Text);
+                            optionHtml = optionHtml.replace('{selected}', (Users.Selected == true ? "selected='selected'" : ""));
+
+                            items += optionHtml;
+
+                        });
+                    $('#typedrilleddown').text(value.toUpperCase());
+                    $('#UserId').html(items);
+                    $('#UserId').val(selectedValue == undefined ? '0' : selectedValue);
+                    $('#UserDropdown').slideDown();
+                },
+                error: function(ex) {
+                    var items = '<option>Select</option>';
+                    $('#UserId').html(items);
+                    $('#UserDropdown').slideUp();
+                }
+            });
+
+        } else {
+
+            $('#UserDropdown').slideUp();
+        }
+    }
+    function getproductQuantity(id, regid) {
+        var value = id;
+        var regionid = regid;
+        if (value != "Select") {
+           
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetProductQuantity")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { ProductId: value, RegionId: regionid},
+                // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+
+                success: function (ProductClmisList) {
+                    debugger;
+                 
+                
+                    $.each(ProductClmisList,
+                        function (i, ProductClmisList) {
+
+                            $('#Qty').text(ProductClmisList.QuantityRemaining);
+
+                        });
+                },
+                error: function(ex) {
+                    var items = '<option>Select</option>';
+                    $('#UserId').html(items);
+                    $('#UserDropdown').slideUp();
+                }
+            });
+
+        } else {
+
+            $('#UserDropdown').slideUp();
+        }
+    }
+
+
+
+</script>
+
+
+
+

@@ -1,0 +1,474 @@
+﻿@model Hands.ViewModels.Models.hcp
+
+@{
+    ViewBag.Title = "View";
+}
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f26;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+        padding-left: 14px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="form-horizontal" style="    padding-left: 14px;">
+
+                    <h4 class="titlehead">View Appuser (HCP)</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @*<div class="form-group">
+                            @Html.Label("App User Id", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.AppUserId, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.AppUserId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        @Html.Label("Name", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            @Html.Label("Name (Urdu)", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.FullNameUrdu, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.FullNameUrdu, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Name (Sindhi)", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.FullNameSindhi, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.FullNameSindhi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        @Html.Label("Husband Name", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.FatherHusbandName, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.FatherHusbandName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("CNIC No", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Cnic, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Cnic, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Contact No", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ContactNumber, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Village", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Region Id", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.RegionId, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Taluka Id", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.TaluqaId, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.TaluqaId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Union Council Id", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.UnionCouncilId, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.UnionCouncilId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Name of Clinic", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ClinicName, new { @class = "form-control" , @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.ClinicName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Name of Private HCP", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.PrivateHCP, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.PrivateHCP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Is She Referred By Marvi Yes/No", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.RefferredbyMarvi, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.RefferredbyMarvi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Date Of Client Generation", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DateofClientGeneration, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.DateofClientGeneration, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Occasion", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @*@Html.TextBoxFor(model => model.MaritialStatus, new { @class = "form-control" })*@
+                            @Html.TextBoxFor(model => model.Occasion, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Occasion, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Referral", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @*@Html.TextBoxFor(model => model.MaritialStatus, new { @class = "form-control" })*@
+                            @Html.TextBoxFor(model => model.Referral, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Referral, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("In case of Current User, Date of Starting", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.IncaseOfCurrentUserDateOfStarting, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.IncaseOfCurrentUserDateOfStarting, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("History Of Irregular Menstrual Cycle Yes/No", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.HistoryOfIrregularMenstrualcycle, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.HistoryOfIrregularMenstrualcycle, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("LMP (Date)", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.LmpDate, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.LmpDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("BP", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Bp, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Bp, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Weight", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Weight, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Jaundice Yes/No", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Jaundice, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Jaundice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Pallor/Anemia Yes/No ", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.PollarAnemia, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.PollarAnemia, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Foul Smelling Vaginal Discharge Yes/No ", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Foulsmellingvaginaldischarge, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Foulsmellingvaginaldischarge, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Pain Lower Abdomen Yes/No ", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Painlowerabdomen, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Painlowerabdomen, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Pills", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Pills, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Pills, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Condoms", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Condoms, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Condoms, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Injectables 1 month", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Injectables1Month, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Injectables1Month, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Injectables 2 month", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Injectables2Month, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Injectables2Month, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Injectables 3 month", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Injectables3Month, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Injectables3Month, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("IUCD 5 years", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Iucd5Year, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Iucd5Year, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("IUCD 10 years", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Iucd10Year, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Iucd10Year, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Implant", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Implant, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Implant, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("TL", new { @class = "control-label col-md-12" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Tl, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Tl, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Number Of Marvi Worker", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.TotalMarviAssigned, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.TotalMarviAssigned, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Population Covered", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.PopulcationCovered, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.PopulcationCovered, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Longitude", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Longitude, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Latitude", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Latitude, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("username", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Password", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Pwd, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Pwd, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    @*<div class="form-group">
+                            @Html.Label("D O B", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.Dob, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Plain Password", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.PlainPassword, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.PlainPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Marital Status", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.MaritalStatus, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
+                            </div>
+                        </div>  <div class="form-group">
+                            @Html.Label("Age per CNIC", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.AgePerCnic, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.AgePerCnic, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("CNIC Validty", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.CnicValidtyEnd, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CnicValidtyEnd, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Qualification", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.Qualification, new { @class = "form-control", maxlength = "3", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Qualification, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("LHV Assign", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.LhvAssigned, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.LhvAssigned, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Total Marvi Assigned", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.TotalMarviAssigned, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.TotalMarviAssigned, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("User Type", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.UserType, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.UserType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.Label("No. Of House Hold", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.NoOfHouseHolds, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.NoOfHouseHolds, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Target MWRAS", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.TargetMwras, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.TargetMwras, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Nearby Public Faculty", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.NearbyPublicFaculty, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.NearbyPublicFaculty, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Nearby Private Faculty", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.NearbyPrivatefaculty, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.NearbyPrivatefaculty, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Date Of Join", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.DateOfJoin, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.DateOfJoin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Date Of Train", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.dateOfTrain, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.dateOfTrain, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Created Date", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.CreatedAt, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.CreatedAt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                            <a href="~/HcpListing/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+

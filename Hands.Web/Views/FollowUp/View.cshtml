@@ -1,0 +1,202 @@
+﻿@model Hands.Data.HandsDB.GetfollowupByNamesReturnModel
+
+@{
+    ViewBag.Title = "Edit MWRA'S";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f26;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+        padding-left: 14px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+                <div class="form-horizontal" style="padding-left: 14px;">
+
+                    <h4 class="titlehead">Session Followup</h4>
+
+                    <div class="form-group">
+                        @Html.Label("Lhv Name", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.lhvname, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        @Html.Label("Marvi Name", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.marviname, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        @Html.Label("Client Name", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.mwraname, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("History of Irregular Menstrual Cycle", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.history_irregular, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("LMP (Date)", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.lmp_date, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label(" BP", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.bp, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Weight", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.weight, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Jaundice ", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.jaundice, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Pallor/Anemia", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.polar_anemia, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Foul Smelling Vaginal Discharge", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.foul, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Pain Lower Abdomen", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.pain_lower, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Any Complication", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.complication, new { @class = "form-control", maxlength = "3", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Any Danger Sign (Mention)", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.danger, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Advice (Mention)", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.advise, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Contraceptive", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.product_name, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Quantity", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+            @Html.Label("Refferal", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.referral, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Occasional", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.occasional, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>*@
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                            <a href="~/FollowUp/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                        </div>
+                    </div>
+
+                    <div id="resultLoadingDiv" hidden class="popup">
+
+                        <img src="~/Content/Images/abc.gif" />
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

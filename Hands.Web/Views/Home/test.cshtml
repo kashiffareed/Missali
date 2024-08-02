@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "test";
+}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<h2>test</h2>
+
+
+<input type="button" onclick="test()"/>
+
+
+<script>
+    function test() {
+
+        swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Poof! Your imaginary file has been deleted!",
+                        {
+                            icon: "success",
+                        });
+                } else {
+                    swal("Your imaginary file is safe!");
+                }
+            });
+    }
+
+</script>
+

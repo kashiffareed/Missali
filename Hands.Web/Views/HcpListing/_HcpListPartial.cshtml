@@ -1,0 +1,108 @@
+﻿
+@using Hands.Common.Common
+@model  Hands.ViewModels.Models.hcp
+<div class="col-lg-12">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+
+        <div class="row" style="padding: 16px;">
+            <div class="m-portlet__head-text col-md-10 pull-left titlehead">Appuser (HCP) Listing</div>
+            <div class="col-md-2" @(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.create.ToInt() && x.MenuId == CommonConstant.MenuList.HCPListing.ToInt()) ? "" : "hidden")>
+                @Html.ActionLink("Add", "Create", "HcpListing", null, new { @class = "btn btn-primary top-button test" })
+            </div>
+        </div>
+        <div class="" style="padding: 6px;" id="divUpdate">
+    @(Html.Grid(Model.HcpList).Build(columns =>
+{
+    columns.Add(c => c.full_name).Titled("Name").Filterable(true);
+    columns.Add(c => c.father_husband_name).Titled("Husband Name").Filterable(true);
+    columns.Add(c => c.cnic).Titled("CNIC no").Filterable(true);
+    columns.Add(c => c.contact_number).Titled("Contact No").Filterable(true);
+    columns.Add(c => c.address).Titled("Village").Filterable(true);
+    columns.Add(c => c.region_name).Titled("District").Filterable(true);
+    columns.Add(c => c.taluqa_name).Titled("Taluqa").Filterable(true);
+    columns.Add(c => c.union_council_name).Titled("Union Council").Filterable(true);
+    columns.Add(c => c.RefferredbyMarvi).Titled("Is She Referred By Marvi Yes/No").Filterable(true);
+    columns.Add(c => c.DateofClientGeneration).Titled("Date Of Client Generation").Filterable(true);
+    columns.Add(c => c.Occasion).Titled("Occasion").Filterable(true);
+    columns.Add(c => c.Referral).Titled("Referral").Filterable(true);
+    columns.Add(c => c.IncaseOfCurrentUserDateOfStarting).Titled("In case Of Current User, Date Of Starting").Filterable(true);
+    columns.Add(c => c.HistoryOfIrregularMenstrualcycle).Titled("History of Irregular Menstrual Cycle Yes/No").Filterable(true);
+    columns.Add(c => c.LmpDate).Titled("LMP (Date)").Filterable(true);
+    columns.Add(c => c.BP).Titled("BP").Filterable(true);
+    columns.Add(c => c.weight).Titled("Weight").Filterable(true);
+    columns.Add(c => c.jaundice).Titled("Jaundice Yes/No").Filterable(true);
+    columns.Add(c => c.PollarAnemia).Titled("Pallor/Anemia Yes/No").Filterable(true);
+    columns.Add(c => c.Foulsmellingvaginaldischarge).Titled("Foul Smelling Vaginal Discharge Yes/No").Filterable(true);
+    columns.Add(c => c.Painlowerabdomen).Titled("Pain Lower Abdomen Yes/No").Filterable(true);
+    columns.Add(c => c.Pills).Titled("Pills").Filterable(true);
+    columns.Add(c => c.Condoms).Titled("Condoms").Filterable(true);
+    columns.Add(c => c.Injectables1month).Titled("Injectables 1 month").Filterable(true);
+    columns.Add(c => c.Injectables3month).Titled("Injectables 2 month").Filterable(true);
+    columns.Add(c => c.PollarAnemia).Titled("Injectables 3 month").Filterable(true);
+    columns.Add(c => c.IUCD5year).Titled("IUCD 5 years").Filterable(true);
+    columns.Add(c => c.IUCD10year).Titled("IUCD 10 years").Filterable(true);
+    columns.Add(c => c.Implant).Titled("Implant").Filterable(true);
+    columns.Add(c => c.TL).Titled("TL").Filterable(true);
+    columns.Add(c => c.total_marvi_assigned).Titled("No of Marvi Workers").Filterable(true);
+    columns.Add(c => c.populcation_covered).Titled("Population Covered").Filterable(true);
+    columns.Add(c => c.Longitude).Titled("Longitude").Filterable(true);
+    columns.Add(c => c.Latitude).Titled("Latitude").Filterable(true);
+    columns.Add(c => c.ClinicName).Titled("Name of Clinic").Filterable(true);
+    columns.Add(c => c.PrivateHCP).Titled("Name of Private HCP").Filterable(true);
+
+    columns.Add(model => Html.ActionLink("View", "View", new { id = model.app_user_id }, new { @class = "edit-button btn btn-primary top-button" })).Css("abc");
+
+    columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.edit.ToInt() && x.MenuId == CommonConstant.MenuList.HCPListing.ToInt()) ? "<a class='edit-button btn btn-primary top-button' href='" + Url.Action("Edit", new { id = model.app_user_id }) + "'>Edit</a>" : "").Encoded(false).Css("abc");
+    //columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.HCPListing.ToInt()) ? "<a class='delete-button btn btn-danger top-button deleteBtn' href='" + Url.Action("Delete", new { id = model.app_user_id }) + "'>Delete</a>" : "").Sortable(true).Encoded(false);
+
+
+    if (HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.CMS.ToInt()))
+    {
+        columns.Add(model => Ajax.ActionLink("Delete", "Delete", "HcpListing", new { id = model.app_user_id }, new AjaxOptions()
+        {
+            HttpMethod = "POST",
+            LoadingElementId = "resultLoadingDiv",
+            UpdateTargetId = "PrjDiv",
+            OnBegin = "ShowProcessingMsg",
+            OnComplete = "HideProcessingMsg",
+            OnSuccess = "success"
+        }, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");
+    }
+
+}).Css("css-classes") // Overwrites all classes with the new ones
+                                                .AppendCss("table-hover") // Appends classes to the current ones
+                                                        .Pageable(pager =>
+                                                        {
+                                                            pager.PageSizes = new Dictionary<int, string>()
+                                                                                                                      {
+                                                                                                          {0, "All"},
+                                                                                                          {10, "10"},
+                                                                                                          {20, "20"},
+                                                                                                          {50, "50"},
+                                                                                                          {100, "100"}
+                                                                                                                      };
+
+
+                                                            pager.ShowPageSizes = true;
+                                                            pager.PagesToDisplay = 10;
+                                                            pager.RowsPerPage = 10;
+                                                        })
+                                                        .WithFilterMode(GridFilterMode.FilterRow)
+                                                        .Empty("No data found")
+                                                        .Filterable()
+
+            )
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#export').css("display", "block");
+
+</script>

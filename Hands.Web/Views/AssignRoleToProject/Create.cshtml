@@ -1,0 +1,156 @@
+﻿@model Hands.ViewModels.Models.AssignRoleToProject.AssignRoleToProject
+
+@{
+    ViewBag.Title = "Create Project";
+}
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f8c;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="" style="    padding: 6px;">
+                    @using (Ajax.BeginForm("Create", "AssignRoleToProject",
+new AjaxOptions
+{
+LoadingElementId = "resultLoadingDiv",
+InsertionMode = InsertionMode.Replace,
+OnBegin = "ShowProcessingMsg",
+OnComplete = "HideProcessingMsg",
+OnSuccess = "success",
+UpdateTargetId = "TargeDiv"
+
+},
+new { @id = "loginForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal" style="    padding-left: 14px;">
+                            <h4 class="titlehead">Assign Role To Project</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @{
+                                var productSelectListItems = Model.ProjectList.Select(r => new SelectListItem { Text = r.Name, Value = r.Id.ToString() }).ToList();
+                            }
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Product Name</label>
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.ProjectId, productSelectListItems, "Select", new { @class = "form-control validateRoleinProject" })
+                                    @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @{
+                                var roleSelectListItems = Model.RoleList.Select(r => new SelectListItem { Text = r.Name, Value = r.Id.ToString() }).ToList();
+                            }
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Role Name</label>
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.RoleId, roleSelectListItems, "Select", new { @class = "form-control validateRoleinProject" })
+                                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                                </div>
+                                <label id="errorlabel" class="text-danger"></label>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                                    <input type="submit" id="savebtn" value="Save" class="edit-button btn btn-primary top-button" />
+                                    <a href="~/AssignRoleToProject/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                                </div>
+
+                            </div>
+
+                            <div id="resultLoadingDiv" hidden class="popup">
+                                <img src="~/Content/Images/abc.gif" />
+                                @*<img taluqaId="image" src="~/Content/Images/ajax-loader.gif"/>*@
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    function ShowProcessingMsg() {
+        $('#resultLoadingDiv').removeAttr('hidden');
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+    function success() {
+        swal("Successful!", "Your record has been successfully saved!", "success");
+    }
+
+    $(".validateRoleinProject").change(function () {
+        
+        var projectid = $("#ProjectId").val();
+        var roleid = $('#RoleId').val();
+        if (projectid != "" && roleid != "") {
+            assignRole(projectid, roleid);
+        }
+
+
+    });
+    function assignRole(projectid, roleid) {
+        debugger;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("assignRole")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { projectId: projectid, roleId: roleid },
+                // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+                success: function (value) {
+                    if (value ==  true) {
+                        $('#errorlabel').text('This Role is already assigned in this project');
+                        $('#savebtn').attr('disabled', "disabled");
+                    }
+                    else {
+                        $('#errorlabel').text('');
+                        $('#savebtn').removeAttr('disabled', "disabled");
+                    }
+                },
+                error: function(ex) {
+                    $('#savebtn').attr('disabled', "disabled");
+                }
+            });
+        }
+
+
+</script>
+
+
+

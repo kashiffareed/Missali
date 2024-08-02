@@ -1,0 +1,34 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+
+<div class="table-scroll">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">AREA</th>
+                <th scope="col">NO. OF MARVIS</th>
+                <th scope="col">NO. OF UCS</th>
+            </tr>
+        </thead>
+        <tbody class=" table-hover">
+            @foreach (var item in Model.InterventionAreaList)
+            {
+                <tr class="table-secondary">
+                    <td>@item.taluqa_name</td>
+                    <td>@item.NoOFNoors</td>
+                    <td>@item.NoOfUcs</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>TOTAL</td>
+                <td>@Model.InterventionAreaList.Sum(i => i.NoOFNoors)</td>
+                <td>@Model.InterventionAreaList.Sum(i => i.NoOfUcs)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
