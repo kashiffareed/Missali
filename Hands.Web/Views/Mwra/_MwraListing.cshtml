@@ -1,0 +1,98 @@
+﻿@using Hands.Common.Common
+@model  Hands.ViewModels.Models.Mwra
+
+<style>
+</style>
+<div class="col-lg-12">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+
+        <div class="row" style="padding: 16px;">
+            <div class="m-portlet__head-text col-md-10 pull-left titlehead">MWRA's Listing</div>
+            <div class="col-md-2" @(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.create.ToInt() && x.MenuId == CommonConstant.MenuList.MWRA.ToInt()) ? "" : "hidden")>
+                @Html.ActionLink("Add", "Create", "Mwra", null, new { @class = "btn btn-primary top-button test" })
+            </div>
+        </div>
+
+        <div class="" style="padding: 6px;" id="divUpdate">
+
+
+            @(Html.Grid(Model.MwraListt).Build(columns =>
+        {
+            columns.Add(model => model.date_of_registration).Titled("Date Of Registration").Sortable(true);
+            columns.Add(model => model.CR_Code).Titled("MW Code").Sortable(false);
+            columns.Add(model => model.full_name).Titled("Name Of Marvi Worker").Sortable(false);
+            columns.Add(model => model.address).Titled("Village").Sortable(false);
+            columns.Add(model => model.region_name).Titled("District").Sortable(false);
+            columns.Add(model => model.taluqa_name).Titled("Tehsil").Sortable(false);
+            columns.Add(model => model.union_council_name).Titled("Union Council").Sortable(false);
+            columns.Add(model => model.name).Titled("Name Of MWRA").Sortable(true);
+            columns.Add(model => model.husband_name).Titled("Husband Name").Sortable(false);
+            columns.Add(model => model.cnic).Titled("CNIC No").Sortable(false);
+            columns.Add(model => model.contact_number).Titled("Contact No").Sortable(false);
+            columns.Add(model => model.education_of_class).Titled("Education (Of Class Attended = 0-16)").Sortable(false);
+            columns.Add(model => model.occupation).Titled("Occupation").Sortable(true);
+            columns.Add(model => model.dob).Titled("Year Of Birth").Sortable(true);
+            columns.Add(model => model.age).Titled("Age (In Year Of Mwra's)").Sortable(true);
+            columns.Add(model => model.duration_of_marriage).Titled("Duration Of Marriage").Sortable(true);
+            columns.Add(model => model.crrently_pregnant).Titled("Currently Pregnant").Sortable(true);
+            columns.Add(model => model.pregnant_no_of_months).Titled("No Of Month").Sortable(true);
+            columns.Add(model => model.no_of_alive_children).Titled("No Of Alive Childern").Sortable(true);
+            columns.Add(model => model.no_of_abortion).Titled("No Of Abortion").Sortable(true);
+            columns.Add(model => model.no_of_children_died).Titled("No Of Childern Died").Sortable(true);
+            columns.Add(model => model.reason_of_death).Titled("Reason Of Death").Sortable(true);
+            columns.Add(model => model.age_of_youngest_child_years).Titled("Age Of Youngest Child If>5 (Years)").Sortable(true);
+            columns.Add(model => model.age_of_youngest_child_months).Titled("Age Of Youngest Child If<5 (Months)").Sortable(true);
+            columns.Add(model => model.have_used_fp_method).Titled("Have You Ever Used FP Method").Sortable(true);
+            columns.Add(model => model.fp_method_used).Titled("Name Of FP Method").Sortable(true);
+            columns.Add(model => model.fp_not_used_in_years).Titled("Sincs How Long FP Not Used  (Years)").Sortable(true);
+            columns.Add(model => model.reason_of_discontinuation).Titled("Reason Of Discontinuation").Sortable(true);
+            columns.Add(model => model.fp_no_reason).Titled("FP No, Any Reason").Sortable(true);
+            columns.Add(model => model.want_to_use_fp).Titled("Do You Want To Use FP Method").Sortable(true);
+            columns.Add(model => model.fp_purpose).Titled("FP Purpose").Sortable(true);
+            columns.Add(model => model.is_user_fp).Titled("Current User Of FP").Sortable(true);
+            columns.Add(model => model.name_of_fp).Titled("Name Of FP").Sortable(true);
+            columns.Add(model => Html.ActionLink("View", "View", new { id = model.mwra_id }, new { @class = "edit-button btn btn-primary top-button" })).Css("abc");
+            columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.edit.ToInt() && x.MenuId ==CommonConstant.MenuList.MWRA.ToInt()) ? "<a class='edit-button btn btn-primary top-button' href='" + Url.Action("Edit", new { id = model.mwra_id }) + "'>Edit</a>" : "").Encoded(false).Css("abc");
+
+            if (HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.CMS.ToInt()))
+            {
+                columns.Add(model => Ajax.ActionLink("Delete", "Delete", "Mwra", new { id = model.mwra_id }, new AjaxOptions()
+                {
+                    HttpMethod = "POST",
+                    LoadingElementId = "resultLoadingDiv",
+                    UpdateTargetId = "PrjDiv",
+                    OnBegin = "ShowProcessingMsg",
+                    OnComplete = "HideProcessingMsg",
+                    OnSuccess = "success"
+                }, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");
+            }
+        }).Css("css-classes").AppendCss("table-hover display nowrap") // Appends classes to the current ones
+           .Pageable(pager =>
+           {
+               pager.PageSizes = new Dictionary<int, string>()
+               {
+                    {0, "All"},
+                    {10, "10"},
+                    {20, "20"},
+                    {50, "50"},
+                    {100, "100"}
+               };
+
+               pager.ShowPageSizes = true;
+               pager.PagesToDisplay = 10;
+               pager.RowsPerPage = 10;
+
+           }).WithFilterMode(GridFilterMode.FilterRow).Empty("No data found").Filterable()
+        )
+        </div>
+    </div>
+    <!--end::Portlet-->
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#export').css("display", "block");
+
+</script>

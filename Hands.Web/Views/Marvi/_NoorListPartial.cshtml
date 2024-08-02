@@ -1,0 +1,106 @@
+﻿
+@using Hands.Common.Common
+@model  Hands.ViewModels.Models.noor
+<div class="col-lg-12">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+
+        <div class="row" style="padding: 16px;">
+            <div class="m-portlet__head-text col-md-10 pull-left titlehead">Appuser (Marvi) Listing</div>
+            <div class="col-md-2" @(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.create.ToInt() && x.MenuId == CommonConstant.MenuList.MarviListing.ToInt()) ? "" : "hidden")>
+                @Html.ActionLink("Add", "Create", "Marvi", null, new { @class = "btn btn-primary top-button test" })
+            </div>
+        </div>
+
+        <div class="" style="padding: 6px;" id="divUpdate">
+            @(Html.Grid(Model.NoorList).Build(columns =>
+        {
+        columns.Add(c => c.lhv).Titled("Name Of Supervisor LHV").Filterable(true);
+        columns.Add(c => c.full_name).Titled("Name Of Marvi Worker").Filterable(true);
+        columns.Add(c => c.marital_status).Titled("Current Martial Status").Filterable(true);
+        columns.Add(c => c.father_husband_name).Titled("Father/Husband Name").Filterable(true);
+        columns.Add(c => c.dob).Titled("Date Of Birth ").Filterable(true);
+        columns.Add(c => c.age_per_cnic).Titled("Age As Per CNIC").Filterable(true);
+        columns.Add(c => c.cnic).Titled("CNIC No").Filterable(true);
+        columns.Add(c => c.cnic_validty_end).Titled("CNIC Validity End").Filterable(true);
+        columns.Add(c => c.contact_number).Titled("Contact No").Filterable(true);
+        columns.Add(c => c.qualification).Titled("Qualification").Filterable(true);
+        columns.Add(c => c.date_of_join).Titled("Date Of Joining").Filterable(true);
+        columns.Add(c => c.date_of_train).Titled("Date Of Training").Filterable(true);
+        columns.Add(c => c.currentStatusOfService).Titled("Current Status Of Service").Filterable(true);
+        columns.Add(c => c.address).Titled("Village Name").Filterable(true);
+        columns.Add(c => c.region_name).Titled("District").Filterable(true);
+        columns.Add(c => c.taluqa_name).Titled("Taluka").Filterable(true);
+        columns.Add(c => c.union_council_name).Titled("Union Council").Filterable(true);
+        columns.Add(c => c.populcation_covered).Titled("Population Covered").Filterable(true);
+        columns.Add(c => c.no_of_house_holds).Titled("No Of House Hold").Filterable(true);
+        columns.Add(c => c.target_mwras).Titled("Target MWRA's").Filterable(true);
+        columns.Add(c => c.Longitude).Titled("Longitude").Filterable(true);
+        columns.Add(c => c.Latitude).Titled("Latitude").Filterable(true);
+        columns.Add(c => c.nearby_public_faculty).Titled("Nearby Public Health Facility").Filterable(true);
+        columns.Add(c => c.nearby_private_faculty).Titled("Nearby Private Health Faculty").Filterable(true);
+
+
+        columns.Add(model => Html.ActionLink("View", "View", new { id = model.app_user_id }, new { @class = "edit-button btn btn-primary top-button" })).Css("abc");
+        columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.edit.ToInt() && x.MenuId == CommonConstant.MenuList.MarviListing.ToInt()) ? "<a class='edit-button btn btn-primary top-button' href='" + Url.Action("Edit", new { id = model.app_user_id }) + "'>Edit</a>" : "").Encoded(false).Css("abc");
+        //columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.MarviListing.ToInt()) ? "<a class='delete-button btn btn-danger top-button deleteBtn' href='" + Url.Action("Delete", new { id = model.app_user_id }) + "'>Delete</a>" : "").Sortable(true).Encoded(false);
+
+
+        if (HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.CMS.ToInt()))
+        {
+            columns.Add(model => Ajax.ActionLink("Delete", "Delete", "Marvi", new { id = model.app_user_id }, new AjaxOptions()
+            {
+                HttpMethod = "POST",
+                LoadingElementId = "resultLoadingDiv",
+                UpdateTargetId = "PrjDiv",
+                OnBegin = "ShowProcessingMsg",
+                OnComplete = "HideProcessingMsg",
+                OnSuccess = "success"
+            }, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");
+        }
+
+        //columns.Add(model => Html.ActionLink("Edit", "Edit", new { id = model.app_user_id }, new { @class = "edit-button btn btn-primary top-button" })).Css("abc");
+        //columns.Add(model => Html.ActionLink("Delete", "Edit", new { id = model.AppUserId }, new { @class = "delete-button btn btn-danger top-button" })).Css("abc");
+        //columns.Add(model => Ajax.ActionLink("Delete", "Delete", "Marvi", new { id = model.app_user_id }, new AjaxOptions()
+        @*{
+            HttpMethod = "POST",
+                LoadingElementId = "resultLoadingDiv",
+                UpdateTargetId = "PrjDiv",
+                OnBegin = "ShowProcessingMsg",
+                OnComplete = "HideProcessingMsg",
+                OnSuccess = "success"
+            }, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");*@
+        })
+                                                                                                              .Css("css-classes")
+                                                                                                                                                         .AppendCss("table-hover") // Appends classes to the current ones
+                                                                                                                                                             .Pageable(pager =>
+                                                                                                                                                             {
+                                                                                                                                                                 pager.PageSizes = new Dictionary<int, string>()
+                                                                                                             {
+                                                                                                          {0, "All"},
+                                                                                                          {10, "10"},
+                                                                                                          {20, "20"},
+                                                                                                          {50, "50"},
+                                                                                                          {100, "100"}
+                                                                                                             };
+
+
+                                                                                                                                                                 pager.ShowPageSizes = true;
+                                                                                                                                                                 pager.PagesToDisplay = 10;
+                                                                                                                                                                 pager.RowsPerPage = 10;
+                                                                                                                                                             })
+                                                                                                                                                             .WithFilterMode(GridFilterMode.FilterRow)
+                                                                                                                                                             .Empty("No data found")
+                                                                                                                                                             .Filterable()
+
+            )
+        </div>
+
+    </div>
+    <!--end::Portlet-->
+</div>
+<script>
+    $(document).ready(function () {
+        $('#export').css("display", "block");
+
+</script>

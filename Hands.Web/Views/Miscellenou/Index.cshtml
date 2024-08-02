@@ -1,0 +1,208 @@
+﻿@using Hands.Common.Common
+@model  IEnumerable<Hands.Data.HandsDB.SpInventoryReturnReturnModel>
+@{
+    ViewBag.Title = "Details";
+
+}
+
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.ClmisReturnManagement.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f8c;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+        z-index: 10000000000000;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
+
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .widget-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        align-items: center;
+        padding: 8px 12px;
+        color: #080808;
+        font-size: 16px;
+        display: flex;
+    }
+
+    .mvc-grid-filter::before {
+        color: #f4516c !important;
+    }
+
+    .abc {
+        width: 12%;
+        text-align: center;
+        background: #f0efff !important;
+    }
+
+    *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    .test {
+        width: 100%
+    }
+
+    .titlehead {
+        font-size: 25px;
+        color: #676767;
+    }
+
+    .filterable {
+        background: #f0efff !important;
+        color: #74749a !important;
+    }
+
+    .btn {
+        padding: 4px 14px !important;
+    }
+</style>
+<link href="~/Content/MvcGrid/mvc-grid.css" rel="stylesheet" />
+<div id="resultLoadingDiv" hidden class="popup">
+
+    <img src="~/Content/Images/abc.gif" />
+</div>
+<div id="PrjDiv">
+
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="row" style="padding: 16px;">
+
+                    <div class="m-portlet__head-text col-md-12 pull-left titlehead">Miscellenous Management Listing</div>
+
+                    <div class="col-md-2">
+                        @Html.ActionLink("Add", "Create", "Miscellenou", null, new { @class = "btn btn-primary top-button test" })
+                    </div>
+                </div>
+
+                <div class="" style="padding: 6px;">
+                    @(Html.Grid(Model).Build(columns =>
+                {
+                    columns.Add(c => c.region_name).Titled("Region Name").Filterable(true);
+                    columns.Add(c => c.product_name).Titled("Product Name").Filterable(true);
+                    columns.Add(c => c.full_name).Titled("Lhv Name").Filterable(true);
+                    columns.Add(c => c.Quantity).Titled("Quantity").Filterable(true);
+                    columns.Add(c => c.ReturnType).Titled("Return Type").Filterable(true);
+                    columns.Add(c => c.Description).Titled("Description").Filterable(true);
+                    columns.Add(c => c.created_at).Titled("Created Date").Filterable(true);
+
+                    columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.edit.ToInt() && x.MenuId == CommonConstant.MenuList.ClmisReturnManagement.ToInt()) ? "<a class='edit-button btn btn-primary top-button' href='" + Url.Action("Edit", new { id = model.Id }) + "'>Edit</a>" : "").Encoded(false).Css("abc");
+                    //columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.ClmisReturnManagement.ToInt()) ? "<a class='delete-button btn btn-danger top-button deleteBtn' href='" + Url.Action("Delete", new { id = model.Id }) + "'>Delete</a>" : "").Sortable(true).Encoded(false);
+
+                    if (HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.CMS.ToInt()))
+                    {
+                        columns.Add(model => Ajax.ActionLink("Delete", "Delete", "Miscellenou", new { id = model.Id }, new AjaxOptions()
+                        {
+                            HttpMethod = "POST",
+                            LoadingElementId = "resultLoadingDiv",
+                            UpdateTargetId = "PrjDiv",
+                            OnBegin = "ShowProcessingMsg",
+                            OnComplete = "HideProcessingMsg",
+                            OnSuccess = "success"
+                        }, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");
+                    }
+                    //columns.Add(model => Html.ActionLink("Edit", "Edit", new { id = model.Id }, new { @class = "edit-button btn btn-primary top-button" })).Css("abc");
+
+                    //columns.Add(model => Ajax.ActionLink("Delete", "Delete", "Miscellenou", new { id = model.Id }, new AjaxOptions()
+                    //{
+                    //    HttpMethod = "POST",
+                    //    LoadingElementId = "resultLoadingDiv",
+                    //    UpdateTargetId = "PrjDiv",
+                    //    OnBegin = "ShowProcessingMsg",
+                    //    OnComplete = "HideProcessingMsg",
+                    //    OnSuccess = "success"
+                    //}, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");
+                })
+                                                                                                                           .Css("css-classes") // Overwrites all classes with the new ones
+                                                                                                                                      .AppendCss("table-hover") // Appends classes to the current ones
+                                                                                                                                              .Pageable(pager =>
+                                                                                                                                              {
+                                                                                                                                                  pager.PageSizes = new Dictionary<int, string>()
+                                                                                                                              {
+                                                                                                                                          {0, "All"},
+                                                                                                                                          {10, "10"},
+                                                                                                                                          {20, "20"},
+                                                                                                                                          {50, "50"},
+                                                                                                                                          {100, "100"}
+                                                                                                                              };
+
+
+                                                                                                                                                  pager.ShowPageSizes = true;
+                                                                                                                                                  pager.PagesToDisplay = 10;
+                                                                                                                                                  pager.RowsPerPage = 10;
+                                                                                                                                              })
+                                                                                                                                              .WithFilterMode(GridFilterMode.FilterRow)
+                                                                                                                                              .Empty("No data found")
+                                                                                                                                              .Filterable()
+
+
+                    )
+
+                </div>
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".btn-success").click(function () {
+            window.location.href = '@Url.Action("index", "Miscellenou")';
+        });
+
+    });
+    function ShowProcessingMsg() {
+
+        $('#resultLoadingDiv').removeAttr('hidden');
+
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+    function success() {
+        swal("Successful!", "Your record has been deleted successful!", "success");
+    }
+</script>
+
+

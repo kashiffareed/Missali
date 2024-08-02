@@ -1,0 +1,380 @@
+﻿@model Hands.Data.HandsDB.LhvChecklist
+@{
+    ViewBag.Title = "View";
+    Layout= "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f26;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+        padding-left: 14px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="form-horizontal" style="    padding-left: 14px;">
+
+                    <h4 class="titlehead">Veiw Lhv Checklist </h4>
+
+                    <h2 class="titlehead">LHV Kit Available </h2>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.Label("IUCD insertion kit", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.IucdInsertionKit, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("MUAC tape", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.MuacTape, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Measuring tape", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.MeasuringTape, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Stethoscope", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Stethoscope, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("BP apparatus", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.BpApparatus, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Weighing machine", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.WeighingMachcine, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Fetoscope", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Fetoscope, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Thermometer", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Thermometer, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Infection prevention kit", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.InfectionPreventionKit, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Tablet with charger", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.TabletWithCharger, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Danger Box", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DangerBox, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("LHV apron", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.LhvApron, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("MEC Wheel", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.MecWheel, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <h2 class="titlehead">LHV Kit Functional </h2>
+                    <div class="form-group">
+                        @Html.Label("IUCD insertion kit", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.IucdInsertionKit, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("BP apparatus", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.BpApparatus, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Weighing machine", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.WeighingMachcine, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Thermometer", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Thermometer, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Infection prevention kit", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.InfectionPreventionKit, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Tablet with charger", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.TabletWithCharger, new { @class = "form-control", maxlength = "3", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Danger Box", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DangerBox, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("LHV apron", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.LhvApron, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <h2 class="titlehead">Indicator 1: <br />Support in decision making </h2>
+                    <div class="form-group">
+                        @Html.Label("Did the provider greet the client and provide counseling about FP to the client?", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ProvideCounselingAboutFp, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Oral pills", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.OralPills, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Injections", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Injections, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("IUD", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Iud, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Condoms", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Condoms, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Implant", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Implant, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Any natural method", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.AnyNaturalMethod, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Permanent method", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.PermanentMethod, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Any other", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.AnyOther, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Did the provider use the MEC wheel for support in decision of the method", new { @class = "control-label col-md-7" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ProviderUseMecWheel, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Check B.P", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.CheckBp, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Check for Anemia and Jaundice", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.CheckAnemiaAndJaundice, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Measurement of weight", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.MeasurementOfWeight, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Pelvic exam (if IUCD) is decided", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.PelvicExam, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Did the client receive the method of choice?", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ClientReceiveMethodChoice, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+
+                    <h2 class="titlehead">Indicator 2: <br />Appropriate Information about FP methods <br />For the method client decided to accept, did the provider give detail information about the selected FP method? </h2>
+
+                    <div class="form-group">
+                        @Html.Label("Explain how to use the method effectively", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ExplainHowToUse, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("About possible side effects", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.AboutPossibleSideEffects, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("What to do if experience any side effect", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ExperienceSideEffect, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Check B.P", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.CheckBp, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("When to come for follow up?", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.FollowUp, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Give follow up tracking card", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.GiveTrackingCard, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Total Number of Mwra's", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.TotalNumOfMwras, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("How many Mwra's verified by team (LHV & DPM) till to date", new { @class = "control-label col-md-5" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.HowManyVerifiedByTeam, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                <div class="form-group">
+                    @Html.Label("Remarks", new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Remarks1, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                            <a href="~/AppUser/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+

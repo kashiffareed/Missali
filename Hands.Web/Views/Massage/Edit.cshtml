@@ -1,0 +1,168 @@
+﻿@model Hands.ViewModels.Models.Massage.PushMassage
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f26;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+        padding-left: 14px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+
+
+                @using (Ajax.BeginForm("Edit", "Massage",
+                        new AjaxOptions
+                        {
+                            LoadingElementId = "resultLoadingDiv",
+                            InsertionMode = InsertionMode.Replace,
+                            OnBegin = "ShowProcessingMsg",
+                            OnComplete = "HideProcessingMsg",
+                            OnSuccess = "successEdit",
+                            UpdateTargetId = "TargeDiv"
+
+                        },
+                        new { @id = "loginForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.MessageId)
+                    <div class="form-horizontal" style="    padding-left: 14px;">
+
+                        <h4 class="titlehead">Edit Product</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @*<div class="form-group">
+                                @Html.Label("Full Name", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+                        <div class="form-group">
+                            @Html.Label("Message", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.Message, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                             
+                            @Html.Label("CreatedAt", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+
+                                <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose ="true">
+                                    @Html.TextBoxFor(x => x.CreatedAt, new { @class = "form-control", id = "data-date", autocomplete = "off", @readonly = "readonly" })
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                                <input type="submit" value="Save" class="edit-button btn btn-primary top-button" />
+                                <a href="~/Massage/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                            </div>
+
+                        </div>
+
+                        <div id="resultLoadingDiv" hidden class="popup">
+
+                            <img src="~/Content/Images/abc.gif" />
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+
+
+    // Start datpicker
+
+    //$(document).ready(function () {
+
+    //    var date_input = $('input[name="Dob"]');
+    //    //var container = $('.container-fluid abc');
+    //    var options = {
+    //        format: 'dd/mm/yyyy',
+    //        //container: container,
+    //        todayHighlight: true,
+    //        autoclose: true,
+    //    };
+    //    date_input.datepicker(options);
+    //})
+
+    // End datpicker
+    function successEdit() {
+        swal("Successful!", "Your record has been successfully updated!", "success");
+    }
+
+
+
+
+    function ShowProcessingMsg() {
+        $('#resultLoadingDiv').removeAttr('hidden');
+
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+
+
+
+
+
+</script>
+
+
+
+

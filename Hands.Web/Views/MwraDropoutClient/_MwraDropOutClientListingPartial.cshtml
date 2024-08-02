@@ -1,0 +1,62 @@
+﻿@using Hands.Common.Common
+@model  Hands.ViewModels.Models.Mwra
+<div class="col-lg-12">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+
+        <div class="row" style="padding: 16px;">
+            <div class="m-portlet__head-text col-md-10 pull-left titlehead">Drop Out Client Listing</div>
+            @*<div class="col-md-2">
+                @Html.ActionLink("Create", "Create", "Mwra", null, new { @class = "btn btn-primary top-button test" })
+            </div>*@
+        </div>
+
+        <div class="" style="padding: 6px;" id="divUpdate">
+
+
+            @(Html
+                .Grid(Model.DropOutClientListing)
+               .Build(columns =>
+               {
+                   columns.Add(model => model.date_of_client_generation).Titled("REGISTERED").Sortable(false);
+                   columns.Add(model => model.name).Titled("FULL NAME").Sortable(true).Filterable(true);
+                   columns.Add(model => model.CR_Code).Titled("CR-CODE").Sortable(false);
+                   columns.Add(model => model.DropoutDate).Titled("DROP OUT DATE").Sortable(false);
+                   columns.Add(model => model.DropoutReason).Titled("DROP OUT REASON").Sortable(false);
+                   columns.Add(model => model.address).Titled("NAME OF VILLAGE").Sortable(false);
+                   columns.Add(model => model.full_name).Titled("MARVI ASSIGNED").Sortable(false);
+                   columns.Add(model => Html.ActionLink("VIEW", "ViewMwraDropOutClient", new { id = model.mwra_client_id }, new { @class = "edit-button btn btn-primary top-button" })).Css("abc");
+               })
+                                                                                                  .Css("css-classes")
+                                                                                                  .AppendCss("table-hover display nowrap") // Appends classes to the current ones
+                                                                                                      .Pageable(pager =>
+                                                                                                      {
+                                                                                                          pager.PageSizes = new Dictionary<int, string>()
+                                                                                                      {
+                                                                                                      {0, "All"},
+                                                                                                      {10, "10"},
+                                                                                                      {20, "20"},
+                                                                                                      {50, "50"},
+                                                                                                      {100, "100"}
+                                                                                                      };
+
+
+                                                                                                          pager.ShowPageSizes = true;
+                                                                                                          pager.PagesToDisplay = 10;
+                                                                                                          pager.RowsPerPage = 10;
+                                                                                                      })
+                                                                                                  .WithFilterMode(GridFilterMode.FilterRow)
+                                                                                                  .Empty("No data found")
+                                                                                                  .Filterable()
+
+
+
+            )
+
+        </div>
+
+    </div>
+    <!--end::Portlet-->
+</div>
+
+

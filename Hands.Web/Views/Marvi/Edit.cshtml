@@ -1,0 +1,597 @@
+﻿@using Hands.Common.Common
+@model Hands.ViewModels.Models.noor
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.edit.ToInt() && x.MenuId == CommonConstant.MenuList.MarviListing.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f26;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+        padding-left: 14px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+
+                @using (Ajax.BeginForm("Edit", "Marvi",
+                    new AjaxOptions
+                    {
+                        LoadingElementId = "resultLoadingDiv",
+                        InsertionMode = InsertionMode.Replace,
+                        OnBegin = "ShowProcessingMsg",
+                        OnComplete = "HideProcessingMsg",
+                        OnSuccess = "successEdit",
+                        UpdateTargetId = "TargeDiv"
+
+                    },
+                    new { @id = "loginForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.AppUserId)
+                    @Html.HiddenFor(x=>x.ProjectId)
+                <div class="form-horizontal" style="padding-left: 14px;">
+                    <h4 class="titlehead">Edit Appuser (Marvi)</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @{
+        var lhvSelectListItems = Model.Lhvs.Select(r => new SelectListItem { Text = r.FullName, Value = r.AppUserId.ToString() }).ToList();
+                    }
+                    <div class="form-group">
+                        @Html.Label("Name of Supervisor LHV", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(f => f.LhvId, lhvSelectListItems, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LhvId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Name of Marvi Worker", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Current Marital Status", new { @class = "control-label col-md-8" })
+                        <div class="col-md-6">
+                            @*@Html.TextBoxFor(model => model.MaritialStatus, new { @class = "form-control" })*@
+                            @Html.DropDownListFor(x => x.MaritalStatus, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="Select", Value = "" },
+                                new SelectListItem{ Text="Single", Value = "single" },
+                                new SelectListItem{ Text="Married", Value = "married" },
+                                new SelectListItem{ Text="Divorced", Value = "divorced" },
+                                new SelectListItem{ Text="Widow", Value = "widow" },
+                            }, new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Father/Husband Name", new { @class = "control-label col-md-3" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.FatherHusbandName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FatherHusbandName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Date Of Birth", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">
+                                @Html.TextBoxFor(x => x.Dob, new { @class = "form-control", id = "data-date", autocomplete = "off", @readonly = "readonly" })
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Age As Per CNIC", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.AgePerCnic, new { @class = "form-control", maxlength = "3" })
+                            @Html.ValidationMessageFor(model => model.AgePerCnic, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("CNIC No", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Cnic, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Cnic, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("CNIC Validty End", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">
+                                @Html.TextBoxFor(x => x.CnicValidtyEnd, new { @class = "form-control", id = "data-date", autocomplete = "off", @readonly = "readonly" })
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.CnicValidtyEnd, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Contact No", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.ContactNumber, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Qualification", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Qualification, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Qualification, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Date of Joining", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">
+                                @Html.TextBoxFor(x => x.DateOfJoin, new { @class = "form-control", id = "data-date", autocomplete = "off", @readonly = "readonly" })
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.DateOfJoin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Date Of Training", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">
+                                @Html.TextBoxFor(x => x.dateOfTrain, new { @class = "form-control", id = "data-date", autocomplete = "off", @readonly = "readonly" })
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.dateOfTrain, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Current status of Service ", new { @class = "control-label col-md-8" })
+                        <div class="col-md-6">
+                            @*@Html.TextBoxFor(model => model.MaritialStatus, new { @class = "form-control" })*@
+                            @Html.DropDownListFor(x => x.MaritalStatus, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="Select", Value = "" },
+                                new SelectListItem{ Text="Working", Value = "working" },
+                                new SelectListItem{ Text="Dropped", Value = "dropped" }
+                            }, new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Village Name", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @{
+        var regionSelectListItems = Model.Regions.Select(r => new SelectListItem { Text = r.RegionName, Value = r.RegionsId.ToString() }).ToList();
+                    }
+                    <div class="form-group">
+                        @Html.Label("District", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Taluka", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(f => f.TaluqaId, new SelectList(string.Empty, "Value", "Text"), "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TaluqaId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Union Council", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(f => f.UnionCouncilId, new SelectList(string.Empty, "Value", "Text"), "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UnionCouncilId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Population Covered", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.PopulcationCovered, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PopulcationCovered, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("No Of House Hold", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NoOfHouseHolds, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NoOfHouseHolds, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Target Mwra's", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.TargetMwras, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TargetMwras, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Longitude", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Longitude, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Latitude", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Latitude, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Nearby Public Health Facility", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NearbyPublicFaculty, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NearbyPublicFaculty, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Nearby Private Health Facility", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NearbyPrivatefaculty, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NearbyPrivatefaculty, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("User Name", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Password", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.PasswordFor(model => model.Pwd, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Pwd, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                            <input type="submit" value="Save" class="edit-button btn btn-primary top-button" />
+                            <a href="~/Marvi/index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                        </div>
+
+                    </div>
+
+                    <div id="resultLoadingDiv" hidden class="popup">
+                        <img src="~/Content/Images/abc.gif" />
+                        @*<img taluqaId="image" src="~/Content/Images/ajax-loader.gif"/>*@
+                    </div>
+                </div>
+                }
+
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        
+
+
+
+        var av = '@Model.RegionId';
+        var taluqa = '@Model.TaluqaId';
+        getTaluqa(av, taluqa);
+        var aa = '@Model.TaluqaId';
+        var union = '@Model.UnionCouncilId';
+        GetUniqueElementId(aa, union);
+        @*$('#RegionId').on('change', getTaluqa('@Model.RegionId'));
+        $('#TaluqaId').on('change', getTaluqa('@Model.TaluqaId'));*@
+
+        $('#RegionId').on('change',
+            function () {
+                
+                var value = $(this).val();
+                ForCreateGetTaluqa(value);
+            });
+        $('#TaluqaId').on('change',
+            function () {
+                
+                var value = $(this).val();
+                forCreateGetCouncil(value);
+            });
+    });
+
+    function getTaluqa(data, taluqa) {
+
+
+        $("#TaluqaId").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetStates")', // we are calling json method
+
+            dataType: 'json',
+
+            data: { regionId: data, TaluqaId:taluqa },
+            // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+
+            success: function(Taluqa) {
+
+                // states contains the JSON formatted list
+                // of states passed from the controller
+                var items = '<option>Select</option>';
+                var selectedValue;
+                $.each(Taluqa,
+                    function(i, Taluqa) {
+                        debugger 
+                        if (Taluqa.Selected) {
+                            selectedValue = Taluqa.Value;
+                        }
+
+                        var optionHtml = "<option {selected} value='{value}'>{text}</option>";
+                        optionHtml = optionHtml.replace('{value}', Taluqa.Value);
+                        optionHtml = optionHtml.replace('{text}', Taluqa.Text);
+                        optionHtml = optionHtml.replace('{selected}', (Taluqa.Selected == true ? "selected='selected'" : ""));
+
+                        items += optionHtml;
+
+                        //$("#TaluqaId").append('<option value="' + Taluqa.Value + '">' +
+                        //    Taluqa.Text + '</option>');
+                        // here we are adding option for States
+
+                    });
+                $('#TaluqaId').html(items);
+                $('#TaluqaId').val(selectedValue);
+            },
+            error: function(ex) {
+                var items = '<option>Select</option>';
+                $('#TaluqaId').html(items);
+                $('#UnionCouncilId').html(items);
+            }
+        });
+        return false;
+    }
+
+    function GetUniqueElementId(data , union)
+    {
+
+        var value = $("#TaluqaId").val();
+        if (value != "Select") {
+            $("#UnionCouncilId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetUnions")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { taluqaId: data, UnionCouncilId: union},
+                // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+
+                success: function(UnionCounil) {
+
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    var items = '<option>Select</option>';
+                    var selectedValue;
+                    $.each(UnionCounil,
+                        function(i, UnionCounil) {
+                            if (UnionCounil.Selected) {
+                                selectedValue = UnionCounil.Value;
+                            }
+                            var optionHtml = "<option {selected} value='{value}'>{text}</option>";
+                            optionHtml = optionHtml.replace('{value}', UnionCounil.Value);
+                            optionHtml = optionHtml.replace('{text}', UnionCounil.Text);
+                            optionHtml = optionHtml.replace('{selected}', (UnionCounil.Selected == true ? "selected='selected'" : ""));
+
+                            items += optionHtml;
+                            //items += "<option selected='" + UnionCounil.Selected +"' value='" + UnionCounil.Value + "'>" + UnionCounil.Text + "</option>";
+                            //$("#TaluqaId").append('<option value="' + Taluqa.Value + '">' +
+                            //    Taluqa.Text + '</option>');
+                            // here we are adding option for States
+
+                        });
+
+                    $('#UnionCouncilId').html(items);
+                    $('#UnionCouncilId').val(selectedValue);
+                },
+                error: function(ex) {
+
+
+                    var items = '<option>Select</option>';
+                    $('#UnionCouncilId').html(items);
+                }
+            });
+            return false;
+        } else {
+            var items = '<option>Select</option>';
+            $('#UnionCouncilId').html(items);
+        }
+
+    }
+
+
+    function ForCreateGetTaluqa(data) {
+
+
+        $("#TaluqaId").empty();
+        
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetStates")', // we are calling json method
+
+            dataType: 'json',
+
+            data: { regionId: data },
+            // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+
+            success: function(Taluqa) {
+
+                // states contains the JSON formatted list
+                // of states passed from the controller
+                var items = '<option>Select</option>';
+                $.each(Taluqa,
+                    function(i, Taluqa) {
+
+                        items += "<option value='" + Taluqa.Value + "'>" + Taluqa.Text + "</option>";
+                        //$("#TaluqaId").append('<option value="' + Taluqa.Value + '">' +
+                        //    Taluqa.Text + '</option>');
+                        // here we are adding option for States
+
+                    });
+                $('#TaluqaId').html(items);
+            },
+            error: function(ex) {
+
+
+                var items = '<option>Select</option>';
+                $('#TaluqaId').html(items);
+                $('#UnionCouncilId').html(items);
+            }
+        });
+        return false;
+    }
+
+
+
+
+
+    function forCreateGetCouncil(data) {
+        
+        var value = $("#TaluqaId").val();
+        if (value != "Select") {
+            $("#UnionCouncilId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetUnions")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { taluqaId: data, UnionCouncilId:0},
+                // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+
+                success: function(UnionCounil) {
+                    
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    var items = '<option>Select</option>';
+                    $.each(UnionCounil,
+                        function(i, UnionCounil) {
+
+                            items += "<option value='" + UnionCounil.Value + "'>" + UnionCounil.Text + "</option>";
+                            //$("#TaluqaId").append('<option value="' + Taluqa.Value + '">' +
+                            //    Taluqa.Text + '</option>');
+                            // here we are adding option for States
+
+                        });
+                    $('#UnionCouncilId').html(items);
+                },
+                error: function(ex) {
+                    
+
+                    var items = '<option>Select</option>';
+                    $('#UnionCouncilId').html(items);
+                }
+            });
+            return false;
+        } else {
+            var items = '<option>Select</option>';
+            $('#UnionCouncilId').html(items);
+        }
+
+    }
+
+
+
+    // Start datpicker
+
+    //$(document).ready(function () {
+
+    //    var date_input = $('input[name="Dob"]');
+    //    //var container = $('.container-fluid abc');
+    //    var options = {
+    //        format: 'dd/mm/yyyy',
+    //        //container: container,
+    //        todayHighlight: true,
+    //        autoclose: true,
+    //    };
+    //    date_input.datepicker(options);
+    //})
+
+    // End datpicker
+    function successEdit() {
+        swal("Successful!", "Your record has been successfully updated!", "success");
+    }
+
+
+
+
+
+        function ShowProcessingMsg() {
+            $('#resultLoadingDiv').removeAttr('hidden');
+
+        }
+        function HideProcessingMsg() {
+
+            $('#resultLoadingDiv').attr('hidden', '');
+        }
+        function success() {
+            swal("Successful!", "Your record has been successfully saved!", "success");
+        }
+
+
+
+
+
+</script>
+
