@@ -1,0 +1,77 @@
+﻿@using Hands.Common.Common
+@model  Hands.ViewModels.Models.ShopkeeperLocation.ShopkeeperLocation
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.ShopKeeper.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+
+<style>
+    .titlehead {
+        font-size: 25px;
+        color: #676767;
+    }
+</style>
+
+<div class="m-content">
+    <div class="col-lg-12">
+        <div class="m-portlet">
+            <div class="row" style="padding: 16px;">
+                <div class="m-portlet__head-text col-md-10 pull-left titlehead">View SHOPKEEPER Location</div>
+
+
+
+            </div>
+            <div id="map" style="width:100%;height:500px;"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function myMap() {
+
+        var myLatLng = { lat: 30.0156414, lng: 68.9769378 };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            zoom: 5
+        });
+        var markers = [];
+
+        @foreach(var item in Model.AppUsers){
+            if (item.Latitude != null && item.Longitude != null) {
+
+            <text>
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: { lat: @item.Latitude, lng: @item.Longitude },
+                    animation: google.maps.Animation.BOUNCE
+                });
+                markers.push(marker);
+
+            </text>
+            }
+    }
+        var bound = new google.maps.LatLngBounds();
+
+        for (var i in markers) {
+            bound.extend(markers[i].getPosition());
+        }
+        map.fitBounds(bound);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCW5hlD-IrhupiN5WODdz3yOr9YP38R6zM&callback=myMap"></script>

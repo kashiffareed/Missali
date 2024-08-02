@@ -1,0 +1,29 @@
+﻿@model  IEnumerable<Hands.ViewModels.Models.sessioncall.Sessioncall>
+@{
+    /**/
+
+    ViewBag.Title = "Import";
+}
+
+
+<h2>Upload File</h2>
+
+@using (Html.BeginForm("Import", "Sessioncall", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        <input type="file" id="dataFile" name="upload" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Upload" class="btn btn-primary top-button test" />
+    </div>
+    <div class="form-group">
+        <a href="~/Content/Excel/sessionCalls.xlsx" target="_blank" class="btn btn-primary top-button test" role="button">Download Sample File</a>
+    </div>
+    <pre>1. Download Sample excel file.
+2. Fill the excel with new data.
+    </pre>
+}

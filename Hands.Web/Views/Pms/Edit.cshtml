@@ -1,0 +1,342 @@
+﻿@using Hands.Common.Common
+@model Hands.ViewModels.Models.Pms.Pms
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.PMS.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f26;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+        padding-left: 14px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+
+
+                @*@using (Ajax.BeginForm("Edit", "Pms",
+                    new AjaxOptions
+                    {
+                        LoadingElementId = "resultLoadingDiv",
+                        InsertionMode = InsertionMode.Replace,
+                        OnBegin = "ShowProcessingMsg",
+                        OnComplete = "HideProcessingMsg",
+                        OnSuccess = "successEdit",
+                        UpdateTargetId = "TargeDiv"
+
+                    },
+                    new { @id = "loginForm" }))*@
+                @using (Html.BeginForm("Edit", "Pms", FormMethod.Post, new { enctype = "multipart/form-data", id = "Pms" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ContentId)
+                    @Html.HiddenFor(x => x.Path)
+                    <div class="form-horizontal" style="    padding-left: 14px;">
+
+                        <h4 class="titlehead">Edit Content Management</h4>
+                        <hr />
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @{
+                            var categorySelectListItems = Model.CategoryList.Select(r => new SelectListItem { Text = r.CategoryName, Value = r.CategoryId.ToString() }).ToList();
+                        }
+                        <div class="form-group">
+                            @Html.Label("Category", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownListFor(f => f.CategoryId, categorySelectListItems, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Title(English)", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.ContentName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContentName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Title (Urdu)", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.ContentNameUrdu, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContentNameUrdu, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Title (Sindhi)", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.ContentNameSindhi, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContentNameSindhi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Attachment(English)", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-6">
+                                <input type="file" name="file" value="@Model.Path" class="form-control" id="imgInp" accept="audio/mp3,video/mp4,image/jpeg" />
+                                <br />
+
+                                @if (Model.ContentType == "video")
+                                {
+                                    @*<div id="preview" style="display:inline"><video id=previewvideo  src="@Model.Path" onclick="window.open('@Model.Path');" height=200 width=200></video></div>*@
+                                    <div id="preview" style="display:inline">
+                                        <video width="320" height="240" controls id="video">
+                                            <source src="@Model.Path" type="video/mp4">
+                                        </video>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div id="preview" style="display:inline"><img src="@Model.Path" onclick="window.open('@Model.Path');" height="200" width="200"></div>
+                                }
+
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            @Html.Label("Content Type", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+
+                                @Html.DropDownListFor(x=>x.ContentType, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Select", Value = "" },
+                                    new SelectListItem{ Text="Image", Value = "image" },
+                                    new SelectListItem{ Text="Video", Value = "video" },
+                                    new SelectListItem{ Text="Pdf", Value = "pdf" },
+                                    new SelectListItem{ Text="Ppt", Value = "ppt" },
+                                    new SelectListItem{ Text="Audio", Value = "audio" },
+                                },new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContentType, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                                <input type="submit" id="submitform" value="Save" class="edit-button btn btn-primary top-button" />
+                                <a href="~/Pms/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                            </div>
+
+                        </div>
+
+                        <div id="resultLoadingDiv" hidden class="popup">
+
+                            <img src="~/Content/Images/abc.gif" />
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+
+
+
+
+
+    $(document).ready(function () {
+
+
+        function readURL(input) {
+
+
+            if (input.files && input.files[0]) {
+
+
+
+                var reader = new FileReader();
+                reader.onloadend = function (video) {
+                    if (input.files[0].type.match('image')) {
+
+                        $("#preview").html("<img src= " + video.target.result + " height=200 width=200 />");
+
+
+                        //$("#preview-video-thumb").attr("src", "");
+                        //$("#preview-thumb").attr("src", video.target.result);
+                        $('#preview').css('display', 'inline');
+
+                    } else {
+                        $("#preview").html(" <video id=previewvideo src = " + video.target.result + "  height=200 width=200 ></video>");
+
+                        //$("#preview-video-thumb").attr("src", video.target.result);
+                        //$("#preview-thumb").attr("src", "");
+                        $("#preview").css('display', 'inline');
+
+                    }
+                };
+                reader.readAsDataURL(input.files[0]);
+
+
+            }
+
+        }
+
+        $('#imgInp').change(function () {
+            debugger
+            readURL(this);
+
+        });
+
+
+
+
+        @*function readURL2(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader2.onload = function (e) {
+                    $('#blahUrdu').css('display', 'inline');
+                    $('#blahUrdu').attr('src', e.target.result);
+                    $('#lbl').text($('input[type=file]').val().split('\\').pop());
+                }
+                reader2.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#imgInp2').change(function () {
+            readURL2(this);
+        });
+
+
+
+        function readURL3(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader3.onload = function (e) {
+                    $('#blahSindhi').css('display', 'inline');
+                    $('#blahSindhi').attr('src', e.target.result);
+                    $('#lbl').text($('input[type=file]').val().split('\\').pop());
+                }
+                reader3.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#imgInp3').change(function () {
+            readURL3(this);
+        });
+
+
+
+
+
+        var path = '@Model.Path';
+        var fill = '@(String.IsNullOrEmpty(Model.Path) ? " " : Model.Path)';
+        debugger
+        if (path == "") {
+            $('#blah').css('display', 'none');
+        }
+        else {
+            $('#blah').attr('src', fill.replace("&amp;", "&"));
+        }
+
+        var pathUrdu = '@Model.PathUrdu';
+        var fill = '@(String.IsNullOrEmpty(Model.PathUrdu) ? " " : Model.PathUrdu)';
+        debugger
+        if (pathUrdu == "") {
+            $('#blahUrdu').css('display', 'none');
+        }
+        else {
+            $('#blahUrdu').attr('src', fill.replace("&amp;", "&"));
+        }
+
+
+
+        var pathSindhi = '@Model.PathUrdu';
+        var fill = '@(String.IsNullOrEmpty(Model.PathUrdu) ? " " : Model.PathUrdu)';
+        debugger
+        if (pathSindhi == "") {
+            $('#blahSindhi').css('display', 'none');
+        }
+        else {
+            $('#blahSindhi').attr('src', fill.replace("&amp;", "&"));
+        }*@
+
+
+    });
+
+    function ShowProcessingMsg() {
+        $('#resultLoadingDiv').removeAttr('hidden');
+
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+    function success() {
+        swal("Successful!", "Your record has been successfully updated!", "success");
+    }
+
+
+        $("#submitform").click(function () {
+
+            if ($('#Pms').valid()) {
+                ShowProcessingMsg();
+            }
+        });
+</script>
+
+
+
+

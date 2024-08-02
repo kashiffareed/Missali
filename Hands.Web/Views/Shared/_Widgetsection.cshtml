@@ -1,0 +1,2331 @@
+﻿@model Hands.ViewModels.Models.Graph.Graph
+@{
+    ViewBag.Title = "Graphs";
+    Layout = null;
+}
+
+<style>
+
+    table.responsive-table thead {
+        line-height: 3em;
+        background: #eee;
+    }
+
+    .table-bordered {
+        border: 0px solid #f4f5f8 !important;
+    }
+
+    .table-scroll {
+        position: relative;
+        width: 100%;
+        z-index: 1;
+        margin: auto;
+        overflow: auto;
+        height: 335px;
+        overflow-x: hidden;
+    }
+
+        .table-scroll table {
+            width: 100%;
+            min-width: auto;
+            margin: auto;
+        }
+
+    .table-wrap {
+        position: relative;
+    }
+
+    .table-scroll th,
+    .table-scroll td {
+        vertical-align: top;
+    }
+
+    .table-scroll thead th {
+        position: sticky;
+        top: 0;
+    }
+    /* safari and ios need the tfoot itself to be position:sticky also */
+    .table-scroll tfoot,
+    .table-scroll tfoot th,
+    .table-scroll tfoot td {
+        position: -webkit-sticky;
+        position: sticky;
+        bottom: 0;
+        background: #1183e1;
+        color: #fff;
+        z-index: 4;
+    }
+
+    th {
+        border: none !important;
+    }
+
+    tfoot {
+        text-align: center;
+        color: white;
+        font-weight: 500;
+    }
+
+    tbody {
+        text-align: center;
+    }
+
+    thead {
+        text-align: center;
+    }
+
+    .text {
+        color: #fff;
+        background-color: #5867dd;
+        text-align: center;
+        padding: 5px;
+        width: 100%;
+        margin: 1px 0px;
+        font-size: 15px;
+    }
+
+    .text1 {
+        color: #fff;
+        background-color: #5867dd;
+        text-align: center;
+        padding: 5px;
+        width: 14.5%;
+        margin: 1px 1px;
+        font-size: 15px;
+    }
+
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    h1, h3 {
+        font-size: 17px;
+        border-bottom: 1px solid #d2d2da;
+        padding-bottom: 11px;
+    }
+
+
+    .input-group > .custom-file, .input-group > .custom-select, .input-group > .form-control {
+        position: relative;
+        flex: 1 1 auto;
+        width: fit-content !important;
+        margin-bottom: 0;
+    }
+    .csvexport {
+        height: 36px;
+        margin-top: 8px;
+    }
+
+    .csvexport2 {
+        margin-top: -42%;
+        margin-left: 490px;
+    }
+    
+</style>
+@{
+    var regionSelectListItems = Model.Regions.Select(r => new SelectListItem { Text = r.RegionName, Value = r.RegionsId.ToString() }).ToList();
+}
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-2">
+            <a href="~/mwra/index?class=m-scroll-top">
+                <div class="m-portlet m-portlet--bordered-semi">
+                    <img src="~/Content/Images/dashboard/MWRAs.jpeg" style="width: 100%" />
+                    <div class="col-md-12" style="text-align: center; margin-top: 10px;">
+                        <h5 style="color: black; font-size: 17px;font-weight: 200">MWRA's</h5>
+                    </div>
+                    <br />
+                    <div class="col-md-12" style="text-align: center;">
+                        <span style="font-size: 20px;font-weight: 400;color: black;">@Model.Dashboardlist.First().Mawra</span><br />
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="~/Marvi/index?class=m-scroll-top">
+                <div class="m-portlet m-portlet--bordered-semi">
+                    <img src="~/Content/Images/dashboard/Marvi.jpg" style="width: 100%;" />
+                    <div class="col-md-12" style="text-align: center; margin-top: 10px;">
+                        <h5 style="color: black; font-size: 17px;font-weight: 200">Marvi Workers</h5>
+                    </div>
+                    <br />
+                    <div class="col-md-12" style="text-align: center;">
+                        <span style="font-size: 20px; font-weight: 400; color: black;">@Model.Dashboardlist.First().NoorWorker</span><br />
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="~/AppUser/index?class=m-scroll-top">
+                <div class="m-portlet m-portlet--bordered-semi">
+                    <img src="~/Content/Images/dashboard/LHV.JPG" style="width: 100%;" />
+                    <div class="col-md-12" style="text-align: center; margin-top: 10px;">
+                        <h5 style="color: black; font-size: 17px;font-weight: 200">LHV</h5>
+                    </div>
+                    <br />
+                    <div class="col-md-12" style="text-align: center;">
+                        <span style="font-size: 20px; font-weight: 400; color: black;">@Model.Dashboardlist.First().LHV</span><br />
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="~/MwraClient/MwraClientLisingActionResult?class=m-scroll-top">
+                <div class="m-portlet m-portlet--bordered-semi">
+                    <img src="~/Content/Images/dashboard/Client.JPG" style="width: 100%;" />
+                    <div class="col-md-12" style="text-align: center; margin-top: 10px;">
+                        <h5 style="color: black; font-size: 17px;font-weight: 200">Total<br />Clients</h5>
+                    </div>
+                    <div class="col-md-12" style="text-align: center;">
+                        <span style="font-size: 20px; font-weight: 400; color: black;">@Model.Dashboardlist.First().TotalClients</span><br />
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="~/NewUserClients/NewUserClientLisingActionResult?class=m-scroll-top">
+                <div class="m-portlet m-portlet--bordered-semi">
+                    <img src="~/Content/Images/dashboard/Client.JPG" style="width: 100%;" />
+                    <div class="col-md-12" style="text-align: center; margin-top: 10px;">
+                        <h5 style="color: black; font-size: 17px;font-weight: 200">Additional Users<br />Client</h5>
+                    </div>
+                    <div class="col-md-12" style="text-align: center;">
+                        <span style="font-size: 20px; font-weight: 400; color: black;">@Model.Dashboardlist.First().NewUserClient</span><br />
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="~/ContinuedUserClients/ContinuedUserClientLisingActionResult?class=m-scroll-top">
+                <div class="m-portlet m-portlet--bordered-semi">
+                    <img src="~/Content/Images/dashboard/Client.JPG" style="width: 100%;" />
+                    <div class="col-md-12" style="text-align: center; margin-top: 10px;">
+                        <h5 style="color: black; font-size: 17px;font-weight: 200">Continued User Client</h5>
+                    </div>
+                    <div class="col-md-12" style="text-align: center;">
+                        <span style="font-size: 20px; font-weight: 400; color: black;">@Model.Dashboardlist.First().ContinuedUserClient</span><br />
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+    @*<div class="row">
+        <div class="col-md-2"><a href="/MwraDropoutClient/MwraDropOutClientLisingActionResult?class=m-scroll-top">
+    <div class="m-portlet m-portlet--bordered-semi">
+        <img src="~/Content/Images/dashboard/Client.JPG" style="width: 100%;" />
+        <div class="col-md-12" style="text-align: center; margin-top: 10px;">
+            <h5 style="color: black; font-size: 17px;font-weight: 200">Drop Out Client</h5>
+        </div>
+        <div class="col-md-12" style="text-align: center;">
+            <span style="font-size: 20px; font-weight: 400; color: black;">@Model.Dashboardlist.First().DropOutClient</span><br />
+        </div>
+    </div>
+</a></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+    </div>*@
+</div>
+
+<!--End::Section-->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Details Of mCPR
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%; margin-right: -5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "DmcprStartDate", placeholder = "Start Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "DmcprEndDate", placeholder = "End Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "DetailsOfMcprRegionId" })
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left: 29px;padding-top: 5px;padding-bottom: 5px;">
+                                <div class="col-md-4">
+                                    <input type="button" value="Submit" id="submitDetailsOfMcprFilter" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="button" value="Clear Filter" id="clearDetailsOfMcprFilter" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ActionLink("Export CSV", "ExportDetailMcpr", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="detailsMcprPartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Best Sellers-->
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Intervention Area
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -8.5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "InterventionAreaRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitInterventionAreaFilter" class="edit-button btn btn-primary top-button" style="margin: 1.1% 5%;" />
+                            
+
+                            @Html.ActionLink("Export CSV", "ExportInventionArea", "Home" , ViewContext.HttpContext.Request.QueryString,new { @class = "btn btn-primary top-button test csvexport" })
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="inventionAreaPartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Number Of Alive Children
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -8.5%; margin-right: -5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-6" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "AliveChildStartDate", placeholder = "Start Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "AliveChildEndDate", placeholder = "End Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding: 4px">
+                                    <div class="col-md-4">
+                                        <input type="button" value="Submit" id="submitAliveChildrenDate" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="button" value="Clear Filter" id="clearAliveChildrenDateFilter" class="edit-button btn btn-primary top-button" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.ActionLink("Export CSV", "ExportAliveChildren", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="aliveChildrenPartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+    </div>
+</div>
+<!--Live Progress For Visit In Community-->
+
+<!--<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">-->
+            <!--Begin::Portlet-->
+            <!--<div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                LHV PROGRESS FOR VISITS IN COMMUNITY
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <input type="button" value="Days" id="days" class="edit-button btn btn-primary top-button" />
+                    <input type="button" value="Months" id="months" class="edit-button btn btn-primary top-button" />
+                    <input type="button" value="Years" id="years" class="edit-button btn btn-primary top-button" />
+
+                    <div id="LiveProgressDiv" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<!--<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">-->
+            <!--Begin::Portlet-->
+            <!--<div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                MARVI PROGRESS FOR VISITS IN COMMUNITY
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <input type="button" value="Days" id="Marvidays" class="edit-button btn btn-primary top-button" />
+                    <input type="button" value="Months" id="Marvimonths" class="edit-button btn btn-primary top-button" />
+                    <input type="button" value="Years" id="Marviyears" class="edit-button btn btn-primary top-button" />
+
+                    <div id="LiveMarviProgressDiv" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<!--Begin::Section-->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Marvi Workers LHV Wise
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "MarviWorkersLhvWiseRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitMarviWorkersLhvWiseFilter" class="edit-button btn btn-primary top-button" style="margin: 0.5% 2.5%;" />
+                        </div>
+                    </div>
+                    <div id="marviWorkersLhvWisePartial" style="width: 100%; height: 365px;"> </div>
+                </div>
+                <!--end:: Widgets/Daily Sales-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                MWRA for each LHV
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "MwraForEachLhvRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitMwraForEachLhvFilter" class="edit-button btn btn-primary top-button" style="margin: 0.5% 2.5%" />
+                        </div>
+                    </div>
+                    <div id="mwraForEachLhvPartial" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Daily Sales-->
+        </div>
+    </div>
+</div>
+<!--End::Section-->
+<!--Begin::Section-->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Continued Users LHV Wise
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "ContinuedUsersLhvWiseRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitContinuedUsersLhvWiseFilter" class="edit-button btn btn-primary top-button" style="margin: 0.5% 2.5%" />
+                        </div>
+                    </div>
+                    <div id="continuedUsersLhvWisePartial" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Daily Sales-->
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Additional Users for each LHV
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "NewUserForEachLhvRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitNewUserForEachLhvFilter" class="edit-button btn btn-primary top-button" style="margin: 0.5% 2.5%" />
+                        </div>
+                    </div>
+                    <div id="newUserForEachLhvPartial" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Daily Sales-->
+        </div>
+    </div>
+</div>
+<!--End::Section-->
+<!--Begin::Section-->
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Additional Users Currrent Month
+                            </h3>
+                            <div id="month" style="font-weight: 600; margin: 10px 5px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -8.5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "NewUserCurrentMonthRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitNewUserCurrentMonthFilter" class="edit-button btn btn-primary top-button" style="margin: 1.1% 5%" />
+                            @Html.ActionLink("Export CSV", "ExportCurrentUserNewMonth", "Home" , ViewContext.HttpContext.Request.QueryString,new { @class = "btn btn-primary top-button test csvexport" })
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="newUserCurrentMonthPartial"> </div>
+
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Additional Users (Method Wise)
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -8.5%; margin-right: -5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-6" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "NewUserStartDate", placeholder = "Start Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "NewUserEndDate", placeholder = "End Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -8.5%; margin-top: 1%;">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "NewUserMethodWiseRegionId" })
+                                </div>
+                                <div class="col-md-6">
+
+                                    <input type="button" value="Submit" id="submitNewUserMethodWiseFilter" class="edit-button btn btn-primary top-button" style=" margin-top: 3%;" />
+                                    <input type="button" value="Clear Filter" id="clearNewUserMethodWiseFilter" class="edit-button btn btn-primary top-button" style="margin-top: 3%;" />
+                                    @Html.ActionLink("Export", "ExportNewUserMethodWise", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test " ,@style ="margin-top:-27%; margin-bottom:2%; margin-left:192px;" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="newUserMethodWisePartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <!--<div class="col-xl-6 col-lg-12">-->
+            <!--Begin::Portlet-->
+            <!--<div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                BIB-Sales
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -8.5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-6" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.TextBoxFor(x => x.BibDate, new { @class = "form-control datepicker", id = "BibDate", autocomplete = "off", @readonly = "readonly" })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submit" class="edit-button btn btn-primary top-button" style="margin: 1.1% 5%" />
+                            @Html.ActionLink("Export CSV", "ExportBlmisSale", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test csvexport" })
+                        </div>
+                    </div>
+
+
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">-->
+                        <!--Begin::Timeline 2 -->
+                        <!--<div id="saleBiBData"> </div>-->
+                        <!--End::Timeline 2 -->
+                    <!--</div>
+                </div>
+            </div>
+        </div>-->
+
+        <!--End::Portlet-->
+        <div class="col-xl-12 col-lg-12">
+            <!--Begin::Portlet-->
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Marvi Client Generation Report
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="container-fluid">
+                    <div class="row" style="margin-left: -3.5%;">
+                        <div class="col-md-12">
+                            <div class="col-md-6" style="float: left;">
+                                <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "McgStartDate", placeholder = "Start Date" } })
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="float: left;">
+                                <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "McgEndDate", placeholder = "End Date" } })
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row" style="margin-left: -3.5%; margin-top: 1%">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "MarviClientGenerationRegionId" })
+                            </div>
+                            <div class="col-md-6">
+
+
+                                <input type="button" value="Submit" id="submitMarviClientGenerationFilter" class="edit-button btn btn-primary top-button" style=" margin-top: 2%;" />
+                                <input type="button" value="Clear Filter" id="clearMarviClientGenerationFilter" class="edit-button btn btn-primary top-button" style=" margin-top: 2%; " />
+
+                                @Html.ActionLink("Export", "ExportMarviClientGeneration", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test " ,@style="margin-top:2%"})
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                    <!--Begin::Timeline 2 -->
+                    <div id="marviClientGenerationPartial"> </div>
+                    <!--End::Timeline 2 -->
+                </div>
+            </div>
+        </div>
+            <!--End::Portlet-->
+        </div>
+    </div>
+</div>
+<!--End::Section-->
+<!--Begin::Section-->
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Continued Users (Method Wise)
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <!--Begin::Portlet-->
+                    <div id="methodsWise" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+        </div>
+        <!--End::Portlet-->
+        <div class="col-xl-6 col-lg-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Additional Users (Method Wise)
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <!--Begin::Portlet-->
+                    <div id="NewUserMethodsWise" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Target Population
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -8.5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "TargetPopulationRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitTargetPopulationFilter" class="edit-button btn btn-primary top-button" style="margin: 1.1% 5%;" />
+                            @Html.ActionLink("Export CSV", "ExportPopulationResult", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test csvexport" })
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="targetPopulationPartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                LHV Details
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -8.5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "LhvDetailsRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitLhvDetailsFilter" class="edit-button btn btn-primary top-button" style="margin: 1.1% 5%;" />
+                            @Html.ActionLink("Export CSV", "ExportLhvDetails", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test csvexport" })
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="lhvDetailsPartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                MWRA's Age Wise Report
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <!--begin::Content-->
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%; margin-right: -5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "MwraAgeWiseStartDate", placeholder = "Start Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "MwraAgeWiseEndDate", placeholder = "End Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "MwraAgeWiseRegionId" })
+                                </div>
+
+                            </div>
+                            
+                            
+                            <div class="row" style="padding-left: 29px;padding-top: 5px;padding-bottom: 5px;">
+                                <div class="col-md-4">
+                                    <input type="button" value="Submit" id="submitMwraAgeWiseFilter" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="button" value="Clear Filter" id="clearMwraAgeWiseFilter" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ActionLink("Export CSV", "ExportMwraAgeWise", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test" })
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="450" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="mwraAgeWisePartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Best Sellers-->
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Details Of Switched Client
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%; margin-right: -5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "DscStartDate", placeholder = "Start Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "DscEndDate", placeholder = "End Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "DetailsOfSwitchedClientRegionId" })
+                                </div>
+                            </div>
+                            
+
+                            <div class="row" style="padding-left: 29px;padding-top: 5px;padding-bottom: 5px;">
+                                <div class="col-md-4">
+                                    <input type="button" value="Submit" id="submitDetailsOfSwitchedClientFilter" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="button" value="Clear Filter" id="clearDetailsOfSwitchedClientFilter" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ActionLink("Export CSV", "ExportDetailsOfShiftedClients", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="detailsOfShiftedClientsPartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Best Sellers-->
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Unmet Need In MWRA's
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div id="unmet" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Continued Users
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <!--Begin::Portlet-->
+                    <div id="currentUser" style="width: 100%; height: 365px;"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                FP users Taluka Wise
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%; margin-right: -5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "FputStartDate", placeholder = "Start Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "FputEndDate", placeholder = "End Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row" style="padding-left: 29px;padding-top: 5px;padding-bottom: 5px;">
+                                <div class="col-md-4">
+                                    <input type="button" value="Submit" id="submitFputDate" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="button" value="Clear Filter" id="clearFputDate" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    @Html.ActionLink("Export CSV", "ExportFpUsersTalukaWise", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test" })
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="fpUserTaluqaWisePartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Best Sellers-->
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Trend Among Continued Users
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "TrendAmongContinuedUsersRegionId" })
+                                </div>
+                            </div>
+                            <input type="button" value="Submit" id="submitTrendAmongContinuedUsersFilter" class="edit-button btn btn-primary top-button" style="margin: 0.5% 2.5%" />
+                            @Html.ActionLink("Export CSV", "ExportTrendAmongCurrentUser", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test csvexport" })
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="trendAmongCurrentUserPartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+
+                </div>
+            </div>
+            <!--end:: Widgets/Best Sellers-->
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Trend Among Additional Users
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="container-fluid">
+                        <div class="row" style="margin-left: -4%; margin-right: -5%;">
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "TanuStartDate", placeholder = "Start Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy" data-date-autoclose="true">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker", id = "TanuEndDate", placeholder = "End Date" } })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float: left;">
+                                    @Html.DropDownListFor(f => f.RegionId, regionSelectListItems, "Select Region", new { @class = "form-control", id = "TrendAmongNewUsersRegionId" })
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left: 29px;padding-top: 5px;padding-bottom: 5px;">
+                                <div class="col-md-4">
+                                    <input type="button" value="Submit" id="submitTrendAmongNewUsersFilter" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="button" value="Clear Filter" id="clearTrendAmongNewUsersFilter" class="edit-button btn btn-primary top-button" style="margin: 1% 2.6%;" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    @Html.ActionLink("Export CSV", "ExportTrendAmongNewUser", "Home", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-scrollable mCustomScrollbar" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400" style="overflow: visible; height: auto; max-height: 410px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div id="trendAmongNewUserPartial"> </div>
+                        <!--End::Timeline 2 -->
+                    </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Best Sellers-->
+        </div>
+    </div>
+</div>
+
+
+
+<!--End::Section-->
+<!--Begin::Section-->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                mCPR
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div id="mcpr" style="width: 100%; height: 365px;"></div>
+                </div>
+            </div>
+            <!--end:: Widgets/Daily Sales-->
+        </div>
+    </div>
+</div>
+
+<!--End::Section-->
+@*<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>*@
+<script src="http://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    google.charts.load("43", { packages: ["corechart", "gauge", "table", "timeline", "bar"] });
+
+    google.charts.setOnLoadCallback(drawLiveProgressDays);
+    google.charts.setOnLoadCallback(drawLiveMarviProgressDays);
+    google.charts.setOnLoadCallback(drawChartMehtod);
+    google.charts.setOnLoadCallback(drawDualMcpr);
+    google.charts.setOnLoadCallback(drawUnmetChart);
+    google.charts.setOnLoadCallback(drawCurrentChart);
+    google.charts.setOnLoadCallback(drawChartNewUserMehtod);
+
+
+    function drawLiveProgressYears() {
+
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', "Years");
+        data.addColumn("number", "Session Calls: ");
+        data.addRows([
+            @{
+                            for (var i = 0; i < Model.liveProgressForVisitInCommunityYearsWiseList.Count; i++)
+                            {
+                                var item = Model.liveProgressForVisitInCommunityYearsWiseList[i];
+                                if (i == Model.liveProgressForVisitInCommunityYearsWiseList.Count - 1)
+                                {
+                                    @Html.Raw(string.Format("['{0}', {1}]", item.Year,item.Session_Call))
+                                }
+                                else
+                                {
+                                    @Html.Raw(string.Format("['{0}', {1}],", item.Year,item.Session_Call))
+                                }
+                            }
+                        }
+        ]);
+    var options = {
+        hAxis: {
+            title: 'Years', titleTextStyle: { color: '#2761c4' },
+            type: 'date'
+        },
+        vAxis: {
+            title: 'Calls', titleTextStyle: { color: '#2761c4' },
+            format: "",
+        }
+    };
+    var material = new google.visualization.AreaChart(document.getElementById("LiveProgressDiv"));
+    material.draw(data, options);
+    }
+
+    function drawLiveProgressMonths() {
+
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', "Months");
+        data.addColumn("number", "Session Calls: ");
+        data.addRows([
+            @{
+                            for (var i = 0; i < Model.liveProgressForVisitInCommunityMonthsWiseList.Count; i++)
+                            {
+                                var item = Model.liveProgressForVisitInCommunityMonthsWiseList[i];
+                                if (i == Model.liveProgressForVisitInCommunityMonthsWiseList.Count - 1)
+                                {
+                                    @Html.Raw(string.Format("['{0}', {1}]", item.Date,item.Session_Call))
+                                }
+                                else
+                                {
+                                    @Html.Raw(string.Format("['{0}', {1}],", item.Date,item.Session_Call))
+                                }
+                            }
+                        }
+        ]);
+    var options = {
+        hAxis: {
+            title: 'Months', titleTextStyle: { color: '#2761c4' },
+        },
+        vAxis: {
+            title: 'Calls', titleTextStyle: { color: '#2761c4' },
+            format: "",
+        }
+    };
+    var material = new google.visualization.AreaChart(document.getElementById("LiveProgressDiv"));
+    material.draw(data, options);
+    }
+
+    function drawLiveProgressDays() {
+
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', "Days");
+        data.addColumn("number", "Session Calls: ");
+        data.addRows([
+            @{
+                    for (var i = 0; i < Model.liveProgressForVisitInCommunityDaysWiseList.Count; i++)
+                    {
+                        var item = Model.liveProgressForVisitInCommunityDaysWiseList[i];
+                        if (i == Model.liveProgressForVisitInCommunityDaysWiseList.Count - 1)
+                        {
+                            @Html.Raw(string.Format("['{0:dd-MM-yyyy}', {1}]", item.Days, item.Session_Call))
+                        }
+                        else
+                        {
+                            @Html.Raw(string.Format("['{0:dd-MM-yyyy}', {1}],", item.Days, item.Session_Call))
+                        }
+                    }
+                }
+        ]);
+    var options = {
+        hAxis: {
+            title: 'Days', titleTextStyle: { color: '#2761c4' },
+        },
+        vAxis: {
+            title: 'Calls', titleTextStyle: { color: '#2761c4' },
+            format: "",
+        }
+    };
+    var material = new google.visualization.AreaChart(document.getElementById("LiveProgressDiv"));
+    material.draw(data, options);
+    }
+
+    function drawChartMehtod() {
+        var data = google.visualization.arrayToDataTable([
+
+            @{
+                    @Html.Raw($"['Product Name','Percentage'],");
+                    foreach (var item in Model.CurrentUserMethodWiselist)
+                    {
+                        @Html.Raw($"['{item.product_name}',{item.Percentage}],");
+                    }
+                }
+        ]);
+    var options = {
+        pieHole: 0.4,
+        chartArea: { width: 400, height: 300 }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('methodsWise'));
+    chart.draw(data, options);
+    }
+
+    function drawChartNewUserMehtod() {
+        var data = google.visualization.arrayToDataTable([
+
+            @{
+                    @Html.Raw($"['Product Name','Percentage'],");
+                    foreach (var item in Model.NewUserMethodWiseList)
+                    {
+                        @Html.Raw($"['{item.product_name}',{item.NewUser}],");
+                    }
+                }
+        ]);
+    var options = {
+        pieHole: 0.4,
+        chartArea: { width: 400, height: 300 }
+
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('NewUserMethodsWise'));
+    chart.draw(data, options);
+    }
+    // chart for MCPR
+
+    function drawDualMcpr() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", 'Taluqa','style');
+        data.addColumn("number", "mCPR",'style');
+        data.addRows([
+            @{
+                        for (var i = 0; i < Model.McprList.Count; i++)
+                        {
+                            var item = Model.McprList[i];
+                            if (i == Model.McprList.Count - 1)
+                            {
+                            @Html.Raw(string.Format("['{0}', {1}]", item.taluqa_name, item.MCPR))
+                            }
+                            else
+                            {
+                            @Html.Raw(string.Format("['{0}', {1}],", item.taluqa_name, item.MCPR))
+                        }
+                    }
+                }
+        ]);
+    var options = {
+        hAxis: {
+            title: "mCPR",
+            textStyle: { color: '2761c4', fontSize: '10' }
+        },
+        vAxis: {
+
+            textStyle: { color: '2761c4', fontSize: '15' }
+        },
+        legend: { position: 'top', alignment: 'start' },
+
+        colors: ['#2761c4'],
+
+        bar: {
+            groupWidth: '50%'
+        }
+    };
+    var material = new google.visualization.ColumnChart(document.getElementById("mcpr"));
+    material.draw(data, options);
+    }
+
+    function drawUnmetChart() {
+        var data = google.visualization.arrayToDataTable([
+
+            @{
+                    @Html.Raw($"['Mwra','want_to_use_fp'],");
+                    foreach (var item in Model.spTestUnmetNeedInMwras)
+                    {
+                        @Html.Raw($"['{item.want_to_use_fp}',{item.Mwra}],");
+                    }
+                }
+        ]);
+    var options = {
+        pieHole: 0.4,
+        chartArea: { width: 400, height: 300 }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('unmet'));
+    chart.draw(data, options);
+    }
+
+    function drawCurrentChart() {
+        var data = google.visualization.arrayToDataTable([
+
+            @{
+                    @Html.Raw($"['UserType','Total'],");
+                    foreach (var item in Model.spTestCurrentUsers)
+                    {
+                        @Html.Raw($"['{item.UserType}',{item.Total}],");
+                    }
+                }
+        ]);
+    var options = {
+        pieHole: 0.4,
+        chartArea: { width: 400, height: 300 }
+    };
+
+
+    var chart = new google.visualization.PieChart(document.getElementById('currentUser'));
+    chart.draw(data, options);
+    }
+
+    function drawLiveMarviProgressDays() {
+
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', "Days");
+        data.addColumn("number", "Session Calls: ");
+        data.addRows([
+            @{
+                    for (var i = 0; i < Model.liveProgressForVisitMarviInCommunityDaysWiseList.Count; i++)
+                    {
+                        var item = Model.liveProgressForVisitMarviInCommunityDaysWiseList[i];
+                        if (i == Model.liveProgressForVisitMarviInCommunityDaysWiseList.Count - 1)
+                        {
+                            @Html.Raw(string.Format("['{0:dd-MM-yyyy}', {1}]", item.Days, item.Session_Call))
+                        }
+                        else
+                        {
+                            @Html.Raw(string.Format("['{0:dd-MM-yyyy}', {1}],", item.Days, item.Session_Call))
+                        }
+                    }
+                }
+        ]);
+    var options = {
+        hAxis: {
+            title: 'Days', titleTextStyle: { color: '#2761c4' },
+        },
+        vAxis: {
+            title: 'Calls', titleTextStyle: { color: '#2761c4' },
+            format: "",
+        }
+    };
+    var material = new google.visualization.AreaChart(document.getElementById("LiveMarviProgressDiv"));
+    material.draw(data, options);
+    }
+
+    function drawLiveMarviProgressMonths() {
+
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', "Months");
+        data.addColumn("number", "Session Calls: ");
+        data.addRows([
+            @{
+                            for (var i = 0; i < Model.liveProgressForVisitMarviInCommunityMonthsWiseList.Count; i++)
+                            {
+                                var item = Model.liveProgressForVisitMarviInCommunityMonthsWiseList[i];
+                                if (i == Model.liveProgressForVisitMarviInCommunityMonthsWiseList.Count - 1)
+                                {
+                                    @Html.Raw(string.Format("['{0}', {1}]", item.Date,item.Session_Call))
+                                }
+                                else
+                                {
+                                    @Html.Raw(string.Format("['{0}', {1}],", item.Date,item.Session_Call))
+                                }
+                            }
+                        }
+        ]);
+    var options = {
+        hAxis: {
+            title: 'Months', titleTextStyle: { color: '#2761c4' },
+        },
+        vAxis: {
+            title: 'Calls', titleTextStyle: { color: '#2761c4' },
+            format: "",
+        }
+    };
+    var material = new google.visualization.AreaChart(document.getElementById("LiveMarviProgressDiv"));
+    material.draw(data, options);
+    }
+
+    function drawLiveMarviProgressYears() {
+
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', "Years");
+        data.addColumn("number", "Session Calls: ");
+        data.addRows([
+            @{
+                            for (var i = 0; i < Model.liveProgressForVisitMarviInCommunityYearsWiseList.Count; i++)
+                            {
+                                var item = Model.liveProgressForVisitMarviInCommunityYearsWiseList[i];
+                                if (i == Model.liveProgressForVisitMarviInCommunityYearsWiseList.Count - 1)
+                                {
+                                    @Html.Raw(string.Format("['{0}', {1}]", item.Year,item.Session_Call))
+                                }
+                                else
+                                {
+                                    @Html.Raw(string.Format("['{0}', {1}],", item.Year,item.Session_Call))
+                                }
+                            }
+                        }
+        ]);
+    var options = {
+        hAxis: {
+            title: 'Years', titleTextStyle: { color: '#2761c4' },
+            type: 'date'
+        },
+        vAxis: {
+            title: 'Calls', titleTextStyle: { color: '#2761c4' },
+            format: "",
+        }
+    };
+    var material = new google.visualization.AreaChart(document.getElementById("LiveMarviProgressDiv"));
+    material.draw(data, options);
+    }
+
+    $.ajax({
+        url: '@Url.Action("DashboardResult", "Home")',
+        type: "GET",
+
+        success: function (response) {
+
+            $('#mwra').html(response.Dashboardlist[0].Mawra);
+        },
+        error: function (response) {
+            console.log('DashboardResult');
+
+        }
+    });
+
+    $.ajax({
+        url: '@Url.Action("MarviResult", "Home")',
+        type: "GET",
+        success: function (response) {
+
+            $('#Noor').html(response);
+        },
+        error: function (response) {
+            console.log('DashboardResult');
+
+        }
+    });
+
+
+    $(document).ready(function () {
+        debugger;
+        interventionAreaFilter("",0);
+        submitAliveChildrenDate("", "");
+        submitMarviWorkersLhvWise("");
+        submitMwraForEachLhv("");
+        submitContinuedUsersLhvWise("");
+        submitNewUserForEachLhv("");
+        submitNewUserCurrentMonth("");
+        submitNewUserMethodWise("", "", "");
+        //BlmisSale("");
+        submitMarviClientGeneration("", "", "");
+        submitTargetPopulation("");
+        submitLhvDetails("");
+        submitMwraAgeWise("","","");
+        submitDetailsOfSwitchedClient("", "", "");
+        submitFpUserTalukaWiseDate("", "");
+        submitTrendAmongContinuedUsers("");
+        submitTrendAmongNewUsers("", "", "");
+        submitDetailsOfMcpr("", "", "");
+
+        const monthNames = ['(January)', '(February)', '(March)', '(April)', '(May)', '(June)', '(July)', '(August)', '(September)', '(October)', '(November)','(December)'];
+        const thisMonth = monthNames[(new Date()).getMonth()];
+        document.getElementById("month").innerHTML = thisMonth;
+
+        $("#days").on("click", function () {
+            drawLiveProgressDays();
+        });
+
+        $("#Marvidays").on("click", function () {
+            drawLiveMarviProgressDays();
+        });
+    });
+
+    $("#months").on("click", function () {
+        drawLiveProgressMonths();
+    });
+
+    $("#years").on("click", function () {
+        drawLiveProgressYears();
+    });
+
+    $("#Marvimonths").on("click", function () {
+        drawLiveMarviProgressMonths();
+    });
+
+    $("#Marviyears").on("click", function () {
+        drawLiveMarviProgressYears();
+    });
+
+    $("#exportInterventionAreaFilter").click(function(e) {
+
+        var regionId = document.querySelector("#InterventionAreaRegionId").value;
+
+        var exportToCSV = 1;
+
+        interventionAreaFilter(regionId,exportToCSV);
+    });
+
+    $("#submitInterventionAreaFilter").click(function(e) {
+
+        var regionId = document.querySelector("#InterventionAreaRegionId").value;
+
+        var exportToCSV = null;
+
+        interventionAreaFilter(regionId,exportToCSV);
+    });
+
+    $("#submitAliveChildrenDate").click(function(e) {
+
+        var startDate = document.querySelector("#AliveChildStartDate").value;
+        var endDate = document.querySelector("#AliveChildEndDate").value;
+
+        submitAliveChildrenDate(startDate,endDate);
+    });
+
+    $("#clearAliveChildrenDateFilter").click(function(e) {
+
+        document.querySelector("#AliveChildStartDate").value = "";
+        document.querySelector("#AliveChildEndDate").value = "";
+
+        var startDate = null;
+        var endDate = null;
+
+        submitAliveChildrenDate(startDate,endDate);
+    });
+
+    $("#submitMarviWorkersLhvWiseFilter").click(function (e) {
+
+        var regionId = document.querySelector("#MarviWorkersLhvWiseRegionId").value;
+
+        submitMarviWorkersLhvWise(regionId);
+    });
+
+    $("#submitMwraForEachLhvFilter").click(function(e) {
+
+        var regionId = document.querySelector("#MwraForEachLhvRegionId").value;
+
+        submitMwraForEachLhv(regionId);
+    });
+
+    $("#submitContinuedUsersLhvWiseFilter").click(function(e) {
+
+        var regionId = document.querySelector("#ContinuedUsersLhvWiseRegionId").value;
+
+        submitContinuedUsersLhvWise(regionId);
+    });
+
+    $("#submitNewUserForEachLhvFilter").click(function (e) {
+
+        var regionId = document.querySelector("#NewUserForEachLhvRegionId").value;
+
+        submitNewUserForEachLhv(regionId);
+    });
+
+    $("#submitNewUserCurrentMonthFilter").click(function (e) {
+
+        var regionId = document.querySelector("#NewUserCurrentMonthRegionId").value;
+
+        submitNewUserCurrentMonth(regionId);
+    });
+
+
+    $("#clearNewUserMethodWiseFilter").click(function (e) {
+
+        document.querySelector("#NewUserStartDate").value = "";
+        document.querySelector("#NewUserEndDate").value = "";
+        document.querySelector("#NewUserMethodWiseRegionId").value = "";
+
+        var startDate = null;
+        var endDate = null;
+        var regionId = null;
+
+        submitNewUserMethodWise(startDate,endDate,regionId);
+    });
+
+    $("#submitNewUserMethodWiseFilter").click(function (e) {
+
+        var startDate = document.querySelector("#NewUserStartDate").value;
+        var endDate = document.querySelector("#NewUserEndDate").value;
+        var regionId = document.querySelector("#NewUserMethodWiseRegionId").value;
+
+        submitNewUserMethodWise(startDate,endDate,regionId);
+    });
+
+    //$("#submit").click(function(e) {
+
+    //    BlmisSale("");
+    //});
+
+    $("#clearMarviClientGenerationFilter").click(function (e) {
+
+        document.querySelector("#McgStartDate").value = "";
+        document.querySelector("#McgEndDate").value = "";
+        document.querySelector("#MarviClientGenerationRegionId").value = "";
+
+        var startDate = null;
+        var endDate = null;
+        var regionId = null;
+        submitMarviClientGeneration(startDate, endDate, regionId);
+    });
+
+    $("#submitMarviClientGenerationFilter").click(function (e) {
+
+        var startDate = document.querySelector("#McgStartDate").value;
+        var endDate = document.querySelector("#McgEndDate").value;
+        var regionId = document.querySelector("#MarviClientGenerationRegionId").value;
+
+        submitMarviClientGeneration(startDate, endDate, regionId);
+    });
+
+    $("#submitTargetPopulationFilter").click(function (e) {
+
+        var regionId = document.querySelector("#TargetPopulationRegionId").value;
+
+        submitTargetPopulation(regionId);
+    });
+
+    $("#submitLhvDetailsFilter").click(function (e) {
+
+        var regionId = document.querySelector("#LhvDetailsRegionId").value;
+
+        submitLhvDetails(regionId);
+    });
+
+    $("#clearMwraAgeWiseFilter").click(function (e) {
+
+        document.querySelector("#MwraAgeWiseStartDate").value = "";
+        document.querySelector("#MwraAgeWiseEndDate").value = "";
+        document.querySelector("#MwraAgeWiseRegionId").value = "";
+
+        var startDate = null;
+        var endDate = null;
+        var regionId = null; 
+        submitMwraAgeWise(startDate, endDate, regionId);
+    });
+
+    $("#submitMwraAgeWiseFilter").click(function (e) {
+
+        var startDate = document.querySelector("#MwraAgeWiseStartDate").value;
+        var endDate = document.querySelector("#MwraAgeWiseEndDate").value;
+        var regionId = document.querySelector("#MwraAgeWiseRegionId").value;
+
+        submitMwraAgeWise(startDate, endDate, regionId);
+    });
+
+    $("#clearDetailsOfSwitchedClientFilter").click(function (e) {
+
+        document.querySelector("#DscStartDate").value = "";
+        document.querySelector("#DscEndDate").value = "";
+        document.querySelector("#DetailsOfSwitchedClientRegionId").value = "";
+
+        var startDate = null;
+        var endDate =null;
+        var regionId =null;
+        submitDetailsOfSwitchedClient(startDate, endDate, regionId);
+    });
+
+    $("#submitDetailsOfSwitchedClientFilter").click(function (e) {
+
+        var startDate = document.querySelector("#DscStartDate").value;
+        var endDate = document.querySelector("#DscEndDate").value;
+        var regionId = document.querySelector("#DetailsOfSwitchedClientRegionId").value;
+
+        submitDetailsOfSwitchedClient(startDate, endDate, regionId);
+    });
+
+    $("#clearFputDate").click(function(e) {
+
+        document.querySelector("#FputStartDate").value = "";
+        document.querySelector("#FputEndDate").value = "";
+
+        var startDate = null;
+        var endDate = null;
+        submitFpUserTalukaWiseDate(startDate,endDate);
+    });
+
+    $("#submitFputDate").click(function(e) {
+
+        var startDate = document.querySelector("#FputStartDate").value;
+        var endDate = document.querySelector("#FputEndDate").value;
+
+        submitFpUserTalukaWiseDate(startDate,endDate);
+    });
+
+    $("#submitTrendAmongContinuedUsersFilter").click(function (e) {
+
+        var regionId = document.querySelector("#TrendAmongContinuedUsersRegionId").value;
+
+        submitTrendAmongContinuedUsers(regionId);
+    });
+
+    $("#clearTrendAmongNewUsersFilter").click(function (e) {
+
+        document.querySelector("#TanuStartDate").value = "";
+        document.querySelector("#TanuEndDate").value = "";
+        document.querySelector("#TrendAmongNewUsersRegionId").value = "";
+
+        var startDate = null;
+        var endDate = null;
+        var regionId = null;
+
+        submitTrendAmongNewUsers(startDate, endDate, regionId);
+    });
+
+
+    $("#submitTrendAmongNewUsersFilter").click(function (e) {
+
+        var startDate = document.querySelector("#TanuStartDate").value;
+        var endDate = document.querySelector("#TanuEndDate").value;
+        var regionId = document.querySelector("#TrendAmongNewUsersRegionId").value;
+
+        submitTrendAmongNewUsers(startDate, endDate, regionId);
+    });
+
+
+
+    $("#submitDetailsOfMcprFilter").click(function (e) {
+
+        var startDate = document.querySelector("#DmcprStartDate").value;
+        var endDate = document.querySelector("#DmcprEndDate").value;
+        var regionId = document.querySelector("#DetailsOfMcprRegionId").value;
+
+        submitDetailsOfMcpr(startDate, endDate, regionId);
+    });
+</script>
+
+<script>
+    function interventionAreaFilter(regionId) {
+        $.ajax({
+            url: '@Url.Action("InventionArea", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionId
+            },
+            success: function(data) {
+
+                $('#inventionAreaPartial').empty();
+                $('#inventionAreaPartial').html(data);
+            },
+            error: function(data) {
+                console.log('inventionAreaPartial');
+            }
+        });
+    }
+
+    function submitAliveChildrenDate(startDate, endDate) {
+        $.ajax({
+            url: '@Url.Action("AliveChildrenResult", "Home")',
+            type: "GET",
+            data: {
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+
+                $('#aliveChildrenPartial').empty();
+                $('#aliveChildrenPartial').html(data);
+            },
+            error: function(data) {
+                console.log('aliveChildrenPartial');
+            }
+        });
+    }
+
+    function submitMarviWorkersLhvWise(regionid) {
+
+        $.ajax({
+            url: '@Url.Action("MarviWorkersLhvWiseResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid
+            },
+            success: function(data) {
+
+                $('#marviWorkersLhvWisePartial').empty();
+                $('#marviWorkersLhvWisePartial').html(data);
+            },
+            error: function(data) {
+                console.log('marviWorkersLhvWisePartial');
+            }
+        });
+    }
+
+    function submitMwraForEachLhv(regionid) {
+
+        $.ajax({
+            url: '@Url.Action("MwraForEachLhvResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid
+            },
+            success: function(data) {
+
+                $('#mwraForEachLhvPartial').empty();
+                $('#mwraForEachLhvPartial').html(data);
+            },
+            error: function(data) {
+                console.log('mwraForEachLhvPartial');
+            }
+        });
+    }
+
+    function submitContinuedUsersLhvWise(regionid) {
+
+        $.ajax({
+            url: '@Url.Action("ContinuedUsersLhvWiseResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid
+            },
+            success: function(data) {
+
+                $('#continuedUsersLhvWisePartial').empty();
+                $('#continuedUsersLhvWisePartial').html(data);
+            },
+            error: function(data) {
+                console.log('continuedUsersLhvWisePartial');
+            }
+        });
+    }
+
+    function submitNewUserForEachLhv(regionid) {
+
+        $.ajax({
+            url: '@Url.Action("NewUserForEachLhvResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid
+            },
+            success: function(data) {
+
+                $('#newUserForEachLhvPartial').empty();
+                $('#newUserForEachLhvPartial').html(data);
+            },
+            error: function(data) {
+                console.log('newUserForEachLhvPartial');
+            }
+        });
+    }
+
+    function submitNewUserCurrentMonth(regionid) {
+
+        $.ajax({
+            url: '@Url.Action("CurrentUserNewMonthResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid
+            },
+            success: function(data) {
+
+                $('#newUserCurrentMonthPartial').empty();
+                $('#newUserCurrentMonthPartial').html(data);
+            },
+            error: function(data) {
+                console.log('newUserCurrentMonthPartial');
+            }
+        });
+    }
+
+    function submitNewUserMethodWise(startDate, endDate, regionid) {
+
+        $.ajax({
+            url: '@Url.Action("NewUserMethodWiseResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid,
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+
+                $('#newUserMethodWisePartial').empty();
+                $('#newUserMethodWisePartial').html(data);
+            },
+            error: function(data) {
+                console.log('newUserMethodWisePartial');
+            }
+        });
+    }
+
+    @*function BlmisSale(bibDate) {
+
+        var selectedDate = document.querySelector("#BibDate").value;
+
+        $.ajax({
+            url: '@Url.Action("BlmisSaleResult", "Home")',
+            type: "GET",
+            data: {
+                date: selectedDate
+            },
+            success: function(data) {
+
+                $('#saleBiBData').empty();
+                $('#saleBiBData').html(data);
+            },
+            error: function(data) {
+                console.log('DashboardResult');
+            }
+        });
+    }*@
+
+    function submitMarviClientGeneration(startDate, endDate, regionid) {
+
+        $.ajax({
+            url: '@Url.Action("MarviClientGenerationResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid,
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+
+                $('#marviClientGenerationPartial').empty();
+                $('#marviClientGenerationPartial').html(data);
+            },
+            error: function(data) {
+                console.log('marviClientGenerationPartial');
+            }
+        });
+    }
+
+    function submitTargetPopulation(regionid) {
+
+        $.ajax({
+            url: '@Url.Action("TargetPopulationResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid
+            },
+            success: function(data) {
+
+                $('#targetPopulationPartial').empty();
+                $('#targetPopulationPartial').html(data);
+            },
+            error: function(data) {
+                console.log('targetPopulationPartial');
+            }
+        });
+    }
+
+    function submitLhvDetails(regionid) {
+
+        $.ajax({
+            url: '@Url.Action("LhvDetailsResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid
+            },
+            success: function(data) {
+
+                $('#lhvDetailsPartial').empty();
+                $('#lhvDetailsPartial').html(data);
+            },
+            error: function(data) {
+                console.log('lhvDetailsPartial');
+            }
+        });
+    }
+
+    function submitMwraAgeWise(startDate, endDate, regionid) {
+
+        $.ajax({
+            url: '@Url.Action("MwraAgeWiseReport", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid,
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+
+                $('#mwraAgeWisePartial').empty();
+                $('#mwraAgeWisePartial').html(data);
+            },
+            error: function(data) {
+                console.log('mwraAgeWisePartial');
+            }
+        });
+    }
+
+    function submitDetailsOfSwitchedClient(startDate, endDate, regionid) {
+
+        $.ajax({
+            url: '@Url.Action("DetailsOfShiftedClientsResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid,
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+
+                $('#detailsOfShiftedClientsPartial').empty();
+                $('#detailsOfShiftedClientsPartial').html(data);
+            },
+            error: function(data) {
+                console.log('detailsOfShiftedClientsPartial');
+            }
+        });
+    }
+
+    function submitFpUserTalukaWiseDate(startDate, endDate) {
+
+        $.ajax({
+            url: '@Url.Action("FpUsersTalukaWiseResult", "Home")',
+            type: "GET",
+            data: {
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+
+                $('#fpUserTaluqaWisePartial').empty();
+                $('#fpUserTaluqaWisePartial').html(data);
+            },
+            error: function(data) {
+                console.log('DashboardResult');
+            }
+        });
+    }
+
+    function submitTrendAmongContinuedUsers(regionId) {
+
+        $.ajax({
+            url: '@Url.Action("TrendAmongCurrentUserResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionId
+            },
+            success: function(data) {
+
+                $('#trendAmongCurrentUserPartial').empty();
+                $('#trendAmongCurrentUserPartial').html(data);
+            },
+            error: function(data) {
+                console.log('trendAmongCurrentUserPartial');
+            }
+        });
+    }
+
+    function submitTrendAmongNewUsers(startDate, endDate, regionid) {
+
+        $.ajax({
+            url: '@Url.Action("TrendAmongNewUserResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid,
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+
+                $('#trendAmongNewUserPartial').empty();
+                $('#trendAmongNewUserPartial').html(data);
+            },
+            error: function(data) {
+                console.log('trendAmongNewUserPartial');
+            }
+        });
+    }
+
+    function submitDetailsOfMcpr(startDate, endDate, regionid) {
+        
+        $.ajax({
+            url: '@Url.Action("DetailMcprResult", "Home")',
+            type: "GET",
+            data: {
+                regionId: regionid,
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+
+                $('#detailsMcprPartial').empty();
+                $('#detailsMcprPartial').html(data);
+            },
+            error: function(data) {
+                console.log('detailsMcprPartial');
+            }
+        });
+    }
+</script>

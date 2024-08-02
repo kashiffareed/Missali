@@ -1,0 +1,227 @@
+﻿@using Hands.Common.Common
+@model Hands.ViewModels.Models.Model.Menu
+@{
+    ViewBag.Title = "Role Managment";
+}
+
+
+<script type="text/javascript">
+
+    @*var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.AssignMenuToRole.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }*@
+</script>
+
+<noscript>
+    <link rel="stylesheet" href="~/jQuery-File-Upload-9.11.2/css/jquery.fileupload-noscript.css">
+</noscript>
+<noscript>
+    <link rel="stylesheet" href="~/jQuery-File-Upload-9.11.2/css/jquery.fileupload-ui-noscript.css">
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+
+
+<script type="text/javascript">
+    var dd;
+    $(
+        function() {
+            debugger;
+
+            $('#jstree_demo_div') // listen for event
+                .on('changed.jstree',
+                function (e, data) {
+                    console.log(data);
+                        var i, j;
+                        const r = [];
+                        for (i = 0, j = data.selected.length; i < j; i++) {
+                            r.push(data.instance.get_node(data.selected[i]).id);
+                        }
+                        dd = "";
+                        //$('#Id').val(r.join(', '));
+                        //$('#jstree_demo_div').html('Selected: ' + r.join(', '));
+                        dd = r;
+
+                    })
+                .jstree({
+                    'core': {
+                        'data': @Html.Action("DocumentCategoryHierarchy")
+                    },
+                    "checkbox": {
+                        "whole_node": false,
+                        "keep_selected_style": false,
+                        "cascade": "down",
+                        //"four_state":true,
+                        "three_state": true,
+                        "two_state": false
+                    },
+                    "plugins": ["types", "checkbox"]
+
+                });
+
+        }
+    );
+    @*$("#submit").click(function() {
+
+
+        var data = dd;
+        https://documenter.getpostman.com/view/5934228/Rzfgmoo2
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Indexx")', // we are calling json method
+            dataType: 'json',
+            data: { test: data }
+
+        });
+
+    });*@
+
+</script>
+
+@using (Html.BeginForm("Indexx", "Tree", FormMethod.Post, new { id = "SubmitForm" }))
+{
+    var roles = Model.Roles.Select(r => new SelectListItem { Text = r.role_name, Value = r.role_id.ToString() }).ToList();
+    @*<div class="form-group">
+            <label class="control-label col-md-2">Project</label>
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.ProjectId, ProjectSelectListItems, "Select", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group" id="UserDropdown">
+        <div class="form-group">
+            <label class="control-label col-md-2">Role</label>
+            <div class="col-md-6">
+
+                @Html.DropDownListFor(model => model.RoleId, new SelectList(roles, "Value", "Text"), "Select", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div id="jstree_demo_div"></div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+            <input type="button" id="submit" value="Save" class="edit-button btn btn-primary top-button" />
+        </div>
+
+    </div>
+}
+
+@section scripts{
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+}
+
+
+<script language="jscript">
+    //$(document).Load(function () {
+    //    $('#1_anchor').hide();
+    //    $("#jstree_demo_div").jstree('open_all');
+    //});
+
+    $("#submit").on('click',
+        function () {
+            debugger
+            //var values =  dd ; //
+            //var theIds = JSON.stringify(values);
+            //this is previos work
+
+            var values = $('#jstree_demo_div').jstree("get_selected", true);
+            var theIds = JSON.stringify(values);
+            var RoleId = $('#RoleId').val();
+            $('#SubmitForm').valid();
+
+            if (RoleId != "") {
+
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("Indexx")', // the method we are calling
+
+        data: { data1: theIds, RoleId: RoleId },
+        //dataType: "json",
+        success: function (result) {
+            debugger
+            window.location.assign("/Tree/AssignMenuToRoleList");
+        },
+        error: function (result) {
+            alert('sorry');
+        }
+                });
+                }
+
+        });
+
+
+     $("#ProjectId").change(function () {
+        var id = $(this).val();
+        GetRoles(id);
+    });
+
+    function GetRoles(id) {
+        var value = id;
+        if (value != "Select") {
+            $("#RoleId").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetRoles")', // we are calling json method
+
+                    dataType: 'json',
+
+                    data: { projectId: $("#ProjectId").val(), RoleId:0 },
+                    // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+
+                    success: function(Role) {
+
+                        // states contains the JSON formatted list
+                        // of states passed from the controller
+                        var items = '<option value="">Select</option>';
+                        $.each(Role,
+                            function (i, Role) {
+                                debugger
+                                items += "<option value='" + Role.Value + "'>" + Role.Text + "</option>";
+                                //$("#TaluqaId").append('<option value="' + Taluqa.Value + '">' +
+                                //    Taluqa.Text + '</option>');
+                                // here we are adding option for States
+
+                            });
+                        $('#RoleId').html(items);
+                        $('#UserDropdown').slideDown();
+                    },
+                    error: function(ex) {
+                        var items = '<option value="">Select</option>';
+                        $('#RoleId').html(items);
+                        $('#UserDropdown').slideUp();
+                    }
+                });
+        } else {
+
+            $('#UserDropdown').slideUp();
+        }
+     }
+
+
+    //$(function () {
+    //    $("#jstree_demo_div").on("changed.jstree", function (e, data) {
+    //        debugger;
+
+    //        var parentId = data.node.parent;
+    //        if (data.action == "select_node") {
+    //            $('#' + parentId + '_anchor').addClass('jstree-clicked');
+    //        }
+    //        //else {
+    //        //    $('#' + parentId + '_anchor').removeClass('jstree-clicked');
+    //        //}
+
+    //        })
+    //        .jstree({
+    //            "plugins": ["changed"]
+    //        });
+    //});
+
+</script>

@@ -1,0 +1,315 @@
+﻿@using Hands.Common.Common
+@model Hands.ViewModels.Models.Pms.Pms
+
+@{
+    ViewBag.Title = "Create PMS";
+}
+
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.PMS.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f8c;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .m-footer {
+        display: none
+    }
+
+    .titlehead {
+        font-size: 22px;
+        color: #676767;
+        padding-top: 12px;
+    }
+</style>
+
+<div id="TargeDiv">
+    <div class="m-content">
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="" style="    padding: 6px;">
+                    @*@using (Ajax.BeginForm("Create", "Pms",
+                        new AjaxOptions
+                        {
+                        LoadingElementId = "resultLoadingDiv",
+                        InsertionMode = InsertionMode.Replace,
+                        OnBegin = "ShowProcessingMsg",
+                        OnComplete = "HideProcessingMsg",
+                        OnSuccess = "success",
+                        UpdateTargetId = "TargeDiv",
+                        HttpMethod = "POST"
+
+
+                        },
+                        new { enctype = "multipart/form-data" }))*@
+
+                    @using (Html.BeginForm("Create", "Pms", FormMethod.Post, new { enctype = "multipart/form-data", id = "" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal" style="    padding-left: 14px;">
+                            <h4 class="titlehead">PMS Management</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @{
+                                var categorySelectListItems = Model.CategoryList.Select(r => new SelectListItem { Text = r.CategoryName, Value = r.CategoryId.ToString() }).ToList();
+                            }
+                            <div class="form-group">
+                                @Html.Label("Category", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(f => f.CategoryId, categorySelectListItems, "Select", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Title(English)", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.ContentName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ContentName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Title (Urdu)", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.ContentNameUrdu, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ContentNameUrdu, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Title (Sindhi)", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.ContentNameSindhi, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ContentNameSindhi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Attachment(English)", new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-6">
+                                    <input type="file" name="file" class="form-control" id="imgInp" accept="audio/mp3,video/mp4,image/jpeg" />
+                                    <br />
+                                    <div id="preview"></div>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                    @Html.Label("Attachment(English)", new { @class = "control-label col-md-2" })
+
+                                    <div class="col-md-6">
+                                        <input type="file" name="path" class="form-control" id="imgInp" accept="image/jpeg" />
+                                        <br />
+                                        <img src="#" id="blah" height="200" width="200" style="display: none;" />
+                                    </div>
+                                </div>*@
+
+
+                            @*<div class="form-group">
+                                    @Html.Label("Attachment(Urdu)", new { @class = "control-label col-md-2" })
+
+                                    <div class="col-md-6">
+                                        <input type="file" name="pathurdu" class="form-control" id="imgInp2" accept="image/jpeg" />
+                                        <br />
+                                        <img src="#" id="blahUrdu" height="200" width="200" style="display: none;" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Attachment(Sindhi)", new { @class = "control-label col-md-2" })
+
+                                    <div class="col-md-6">
+                                        <input type="file" name="pathsindhi" class="form-control" id="mediaInp3" accept="image/jpeg" />
+                                        <br />
+                                        <img src="#" id="blahSindhi" height="200" width="200" style="display: none;" />
+                                    </div>
+                                </div>*@
+
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Content Type", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+
+                                    @Html.DropDownListFor(x => x.ContentType, new List<SelectListItem>
+                                                        {
+                                                            new SelectListItem{ Text="Select", Value = "" },
+                                                            new SelectListItem{ Text="Image", Value = "image" },
+                                                            new SelectListItem{ Text="Video", Value = "video" },
+                                                            new SelectListItem{ Text="Pdf", Value = "pdf" },
+                                                            new SelectListItem{ Text="Ppt", Value = "ppt" },
+                                                            new SelectListItem{ Text="Audio", Value = "audio" },
+                                                        }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ContentType, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-6" style="padding-bottom: 16px;">
+                                    <input type="submit" value="Save" id="submitform" class="edit-button btn btn-primary top-button" />
+                                    <a href="~/Pms/Index?class=m-scroll-top"><span class="fa fa-arrow-circle-o-left col-md-offset-2" style="font-size: 36px;    float: right;"></span></a>
+                                </div>
+
+                            </div>
+
+                            <div id="resultLoadingDiv" hidden class="popup">
+                                <img src="~/Content/Images/abc.gif" />
+                                @*<img taluqaId="image" src="~/Content/Images/ajax-loader.gif"/>*@
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+
+    function ShowProcessingMsg() {
+        $('#resultLoadingDiv').removeAttr('hidden');
+
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+    function success() {
+        swal("Successful!", "Your record has been successfully saved!", "success");
+    }
+
+
+    $("#submitform").click(function () {
+
+        if ($('#Pms').valid()) {
+            ShowProcessingMsg();
+        }
+    });
+</script>
+
+<script>
+
+    $('#imgInp').change(function () {
+        debugger
+        readURL1(this);
+    });
+    $('#imgInp').change(function () {
+        debugger
+        readURL1(this);
+    });
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+            reader.onloadend = function (video) {
+                if (input.files[0].type.match('image')) {
+
+                    $("#preview").html("<img src= " + video.target.result + " height=200 width=200 />");
+
+
+                    //$("#preview-video-thumb").attr("src", "");
+                    //$("#preview-thumb").attr("src", video.target.result);
+                    $('#preview').css('display', 'inline');
+
+                } else {
+                    $("#preview").html(" <video  id=previewvideo src = " + video.target.result + "  height=200 width=200 ></video>");
+
+                    //$("#preview-video-thumb").attr("src", video.target.result);
+                    //$("#preview-thumb").attr("src", "");
+                    $("#preview").css('display', 'inline');
+
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
+
+
+        }
+
+    }
+</script>
+
+@*<script>
+        function readURL1(input) {
+
+            if (input.files && input.files[0]) {
+                var reader2 = new FileReader();
+
+                reader2.onload = function (e) {
+                    $('#blahUrdu').css('display', 'inline');
+                    $('#blahUrdu').attr('src', e.target.result);
+                    $('#lblUrdu').text($('input[type=file]').val().split('\\').pop());
+                }
+                reader2.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#imgInp2').change(function () {
+            readURL1(this);
+        });
+    </script>
+
+    <script>
+        function readURL2(input) {
+
+            if (input.files && input.files[0]) {
+                var reader3 = new FileReader();
+
+                reader3.onload = function (e) {
+                    $('#blahSindhi').css('display', 'inline');
+                    $('#blahSindhi').attr('src', e.target.result);
+                    $('#lblSindhi').text($('input[type=file]').val().split('\\').pop());
+                }
+                reader3.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#mediaInp3').change(function () {
+            readURL2(this);
+        });
+    </script>*@
+
+
+
+
+
+
+
+
+
+

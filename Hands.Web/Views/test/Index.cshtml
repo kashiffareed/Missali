@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>
+    
+    Index
+</h2>
+
+
+
+<div id="divToUpdate">
+   @* @Ajax.ActionLink("New", "Index", "test", new AjaxOptions() { UpdateTargetId = "divToUpdate" }, new { @class = "btn" })*@
+    
+    <input type="button" value="new" onclick="data()"/>
+
+</div>
+
+<script type="text/javascript">
+    function data() {
+         
+        $.ajax({
+            type: "Get",
+            url:"/test/content",
+            data: param = "",
+            contentType: "application/json; charset=utf-8",
+            success: successFunc
+          
+        });
+
+        function successFunc(data, status) {
+             
+            $("#divToUpdate").replaceWith(data);
+          
+        }
+
+        function errorFunc() {
+            alert('error');
+        }
+    }
+  
+</script>

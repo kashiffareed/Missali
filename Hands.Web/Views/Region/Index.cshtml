@@ -1,0 +1,238 @@
+﻿@model  IEnumerable<Hands.Data.HandsDB.Region>
+@using Hands.Common.Common
+@using NonFactors.Mvc.Grid;
+@{
+    ViewBag.Title = "Regions";
+
+}
+
+<script type="text/javascript">
+
+    var right =
+        '@(HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.view.ToInt() && x.MenuId == CommonConstant.MenuList.Districs.ToInt()))';
+
+    if (right === 'False') {
+        window.location.href = '@Url.Action("Index","Default")';
+    }
+</script>
+
+@*@Html.AjaxGrid(Url.Action("Index"))
+
+    @Html.AjaxGrid(Url.Action("Index"), new { id = "my-ajax-grid" })*@
+<style>
+    .popup {
+        position: fixed;
+        background: #5f5f5f8c;
+        width: 100%;
+        padding-left: 30%;
+        top: 0;
+        padding-top: 21%;
+        height: 274%;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
+
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .widget-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        align-items: center;
+        padding: 8px 12px;
+        color: #080808;
+        font-size: 16px;
+        display: flex;
+    }
+
+    .mvc-grid-filter::before {
+        color: #f4516c !important;
+    }
+
+    .abc {
+        width: 12%;
+        text-align: center;
+        background: #f0efff !important;
+    }
+
+    *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    .test {
+        width: 100%
+    }
+
+    .titlehead {
+        font-size: 25px;
+        color: #676767;
+    }
+
+    .filterable {
+        background: #f0efff !important;
+        color: #74749a !important;
+    }
+
+    .btn {
+        padding: 4px 14px !important;
+    }
+</style>
+<link href="~/Content/MvcGrid/mvc-grid.css" rel="stylesheet" />
+<div id="resultLoadingDiv" hidden class="popup">
+    <img src="~/Content/Images/abc.gif" />
+    @*<img id="image" src="~/Content/Images/ajax-loader.gif"/>*@
+</div>
+
+
+
+<div id="PrjDiv">
+
+    <div class="m-content">
+
+
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+
+                <div class="row" style="padding: 16px;">
+
+                    <div class="m-portlet__head-text col-md-12 pull-left titlehead">District</div>
+
+                    <div class="col-md-2">
+                        @Html.ActionLink("Add", "Create", "Region", null, new { @class = "btn btn-primary top-button test" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.ActionLink("Import", "Import", "Region", new { @class = "btn btn-primary top-button test" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.ActionLink("Export CSV", "ExportIndex", "Region", ViewContext.HttpContext.Request.QueryString, new { @class = "btn btn-primary top-button test" })
+                    </div>
+
+                </div>
+
+                <div class="" style="padding: 6px;">
+
+
+                    @(Html
+                                                                  .Grid(Model)
+                                                                  .Build(columns =>
+                                                                  {
+
+                                                                      columns.Add(model => model.RegionName).Titled("DISTRICT NAME").Sortable(true).Filterable(true);
+                                                                      columns.Add(model => model.CreatedAt).Titled("REGISTERED DATE").Sortable(false);
+
+
+                                                                      columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.edit.ToInt() && x.MenuId == CommonConstant.MenuList.Districs.ToInt()) ? "<a class='edit-button btn btn-primary top-button' href='" + Url.Action("Edit", new { id = model.RegionsId }) + "'>Edit</a>" : "").Encoded(false).Css("abc");
+                                                                      //columns.Add(model => HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.Districs.ToInt()) ? "<a class='delete-button btn btn-danger top-button deleteBtn' href='" + Url.Action("Delete", new { id = model.RegionsId }) + "'>Delete</a>" : "").Sortable(true).Encoded(false);
+
+                                                                      if (HandSession.Current.AccessList.Any(x => x.ProjectId == HandSession.Current.ProjectId && x.RoleId == HandSession.Current.RoleId && x.AccessLevelId == CommonConstant.RightLevelEnum.delete.ToInt() && x.MenuId == CommonConstant.MenuList.CMS.ToInt()))
+                                                                      {
+                                                                          columns.Add(model => Ajax.ActionLink("Delete", "Delete", "Region", new { id = model.RegionsId }, new AjaxOptions()
+                                                                          {
+                                                                              HttpMethod = "POST",
+                                                                              LoadingElementId = "resultLoadingDiv",
+                                                                              UpdateTargetId = "PrjDiv",
+                                                                              OnBegin = "ShowProcessingMsg",
+                                                                              OnComplete = "HideProcessingMsg",
+                                                                              OnSuccess = "success"
+                                                                          }, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");
+                                                                      }
+
+
+                                                                      //columns.Add(model => Html.ActionLink("Edit", "Edit", new { id = model.RegionsId }, new { @class = "edit-button btn btn-primary top-button" })).Css("abc");
+                                                                      //columns.Add(model => Html.ActionLink("Delete", "Delete", new { id = model.RegionsId }, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");
+                                                                      //    columns.Add(model => Ajax.ActionLink("Delete", "Delete", "Region", new { id = model.RegionsId }, new AjaxOptions()
+                                                                      //{
+                                                                      //    HttpMethod = "POST",
+                                                                      //    LoadingElementId = "resultLoadingDiv",
+                                                                      //    UpdateTargetId = "PrjDiv",
+                                                                      //    OnBegin = "ShowProcessingMsg",
+                                                                      //    OnComplete = "HideProcessingMsg",
+                                                                      //    OnSuccess = "success"
+                                                                      //}, new { @class = "delete-button btn btn-danger top-button deleteBtn" })).Css("abc");
+                                                                  })
+                                                                  //columns.Add(model => "<button onclick='test()' class='delete-button btn btn-danger top-button deleteBtn target' data-id=\"" + model.MwraId + "\">Delete</button>").Encoded(false);
+                                                                  //            columns.Add(model => Ajax.ActionLink("Delete",//link text
+                                                                  //"Delete", // action name
+                                                                  //"Mwra",  // controller
+                                                                  //new { id = model.MwraId }, // route values
+                                                                  //new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "PrjDiv", OnBegin = "showDeletePopup" }, // ajax options
+                                                                  //new { @class = "delete-button btn btn-danger top-button deleteBtn" } //htmlAttributes
+                                                                  //));
+
+                                                                  .Css("css-classes") // Overwrites all classes with the new ones
+                                                                  .AppendCss("table-hover") // Appends classes to the current ones
+                                                                  .Pageable(pager =>
+                                                                  {
+                                                                      pager.PageSizes = new Dictionary<int, string>()
+                                                                                                              {
+                                                                                                                  {0, "All"},
+                                                                                                                  {10, "10"},
+                                                                                                                  {20, "20"},
+                                                                                                                  {50, "50"},
+                                                                                                                  {100, "100"}
+                                                                                                              };
+
+
+                                                                      pager.ShowPageSizes = true;
+                                                                      pager.PagesToDisplay = 10;
+                                                                      pager.RowsPerPage = 10;
+                                                                  })
+                                                                  .WithFilterMode(GridFilterMode.FilterRow)
+                                                                  .Empty("No data found")
+                                                                  .Filterable()
+
+
+
+                    )
+
+                </div>
+
+            </div>
+            <!--end::Portlet-->
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $(".btn-success").click(function () {
+            window.location.href = '@Url.Action("Index", "Region")';
+        });
+
+    });
+    function ShowProcessingMsg() {
+
+        $('#resultLoadingDiv').removeAttr('hidden');
+
+    }
+    function HideProcessingMsg() {
+
+        $('#resultLoadingDiv').attr('hidden', '');
+    }
+    function success() {
+        swal("Successful!", "Your record has been deleted successful!", "success");
+    }
+
+</script>
+
+
+
+
