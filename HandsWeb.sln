@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hands.Data", "Hands.Data\Hands.Data.csproj", "{7E4506A8-E0F9-457E-9E67-185182F91788}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hands.Service", "Hands.Service\Hands.Service.csproj", "{441AA1F1-0742-4AE6-84B6-632B98CE4FC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hands.ViewModels", "Hands.ViewModels\Hands.ViewModels.csproj", "{004EA283-AEBF-4B0F-939A-821A603CF78D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hands.WebAPI", "Hands.WebAPI\Hands.WebAPI.csproj", "{7A04EEAA-B360-4562-B6F8-8A1616650A46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hands.Common", "Hands.Common\Hands.Common.csproj", "{208C0790-B86C-407F-A725-1AC2BA623753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hands.Web", "Hands.Web\Hands.Web.csproj", "{5686FCAF-18D2-4658-BD92-E500E0055D81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E4506A8-E0F9-457E-9E67-185182F91788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E4506A8-E0F9-457E-9E67-185182F91788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E4506A8-E0F9-457E-9E67-185182F91788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E4506A8-E0F9-457E-9E67-185182F91788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{441AA1F1-0742-4AE6-84B6-632B98CE4FC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{441AA1F1-0742-4AE6-84B6-632B98CE4FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{441AA1F1-0742-4AE6-84B6-632B98CE4FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{441AA1F1-0742-4AE6-84B6-632B98CE4FC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{004EA283-AEBF-4B0F-939A-821A603CF78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{004EA283-AEBF-4B0F-939A-821A603CF78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{004EA283-AEBF-4B0F-939A-821A603CF78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{004EA283-AEBF-4B0F-939A-821A603CF78D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A04EEAA-B360-4562-B6F8-8A1616650A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A04EEAA-B360-4562-B6F8-8A1616650A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A04EEAA-B360-4562-B6F8-8A1616650A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A04EEAA-B360-4562-B6F8-8A1616650A46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{208C0790-B86C-407F-A725-1AC2BA623753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{208C0790-B86C-407F-A725-1AC2BA623753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{208C0790-B86C-407F-A725-1AC2BA623753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{208C0790-B86C-407F-A725-1AC2BA623753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5686FCAF-18D2-4658-BD92-E500E0055D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5686FCAF-18D2-4658-BD92-E500E0055D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5686FCAF-18D2-4658-BD92-E500E0055D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5686FCAF-18D2-4658-BD92-E500E0055D81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0057BB8A-E15A-48A2-AEBD-63394980DE46}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.100.150:8081/tfs/digitrends
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Hands.Web\\Hands.Web.csproj
+		SccProjectName1 = Hands.Web
+		SccLocalPath1 = Hands.Web
+		SccProjectUniqueName2 = Hands.Common\\Hands.Common.csproj
+		SccProjectName2 = Hands.Common
+		SccLocalPath2 = Hands.Common
+		SccProjectUniqueName3 = Hands.WebAPI\\Hands.WebAPI.csproj
+		SccProjectName3 = Hands.WebAPI
+		SccLocalPath3 = Hands.WebAPI
+		SccProjectUniqueName4 = Hands.ViewModels\\Hands.ViewModels.csproj
+		SccProjectName4 = Hands.ViewModels
+		SccLocalPath4 = Hands.ViewModels
+		SccProjectUniqueName5 = Hands.Service\\Hands.Service.csproj
+		SccProjectName5 = Hands.Service
+		SccLocalPath5 = Hands.Service
+		SccProjectUniqueName6 = Hands.Data\\Hands.Data.csproj
+		SccProjectName6 = Hands.Data
+		SccLocalPath6 = Hands.Data
+	EndGlobalSection
+EndGlobal
