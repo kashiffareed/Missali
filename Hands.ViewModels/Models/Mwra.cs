@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -139,9 +139,12 @@ namespace Hands.ViewModels.Models
         public string NameOfFp { get; set; } // name_of_fp (length: 255)
 
         public int? ProjectId { get; set; } // is_user_fp (length: 10)
-        
+
         [Required]
         public string DateOfRegistration { get; set; } // date_of_registration (length: 50)
+
+
+        public DateTime? DeviceCreatedDate { get; set; }
 
         public IEnumerable<Data.HandsDB.Mwra> MwraList;
         public IEnumerable<Data.HandsDB.SpMwrasListingReturnModel> MwraListt { get; set; }
@@ -206,8 +209,24 @@ namespace Hands.ViewModels.Models
             return mwra;
 
         }
+        public void UpdateAge()
+        {
+            if (DateTime.TryParseExact(Dob, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime parsedDob))
+            {
+                Age = CalculateAge(parsedDob);
+            }
+            else
+            {
+                Age = null;
+            }
+        }
 
-
-
+        private int CalculateAge(DateTime dob)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - dob.Year;
+            if (dob > today.AddYears(-age)) age--;
+            return age;
+        }
     }
 }
