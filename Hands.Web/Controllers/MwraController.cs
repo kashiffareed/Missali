@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -157,23 +158,49 @@ namespace Hands.Web.Controllers
 
         public ActionResult Create()
         {
-            var model = new Mwra();
-            model.ProjectId = HandSession.Current.ProjectId;
-            model.Regions = _regionService.GetAll().Where(x => x.ProjectId == HandSession.Current.ProjectId);
-            model.Marvis = _noorService.GetAll().Where(x => x.ProjectId == HandSession.Current.ProjectId && x.UserType == "marvi");
+            var model = new Mwra
+            {
+                ProjectId = HandSession.Current.ProjectId,
+                Regions = _regionService.GetAll().Where(x => x.ProjectId == HandSession.Current.ProjectId),
+                Marvis = _noorService.GetAll().Where(x => x.ProjectId == HandSession.Current.ProjectId && x.UserType == "marvi")
+            };
             return View(model);
         }
+
+        // POST: Mwra/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Mwra model)
         {
             if (ModelState.IsValid)
             {
+                model.UpdateAge();
                 var mwra = model.GetMwraEntity();
                 mwra.ProjectId = HandSession.Current.ProjectId;
                 _mwraService.Insert(mwra);
                 _mwraService.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            model.Regions = _regionService.GetAll().Where(x => x.ProjectId == HandSession.Current.ProjectId);
+            model.Marvis = _noorService.GetAll().Where(x => x.ProjectId == HandSession.Current.ProjectId && x.UserType == "marvi");
+            return View(model);
+        }
+
+        // POST: Mwra/CalculateAge
+        public JsonResult CalculateAge(string dob)
+        {
+            if (DateTime.TryParseExact(dob, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateOfBirth))
+            {
+                int age = DateTime.Now.Year - dateOfBirth.Year;
+                if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
+                    age--;
+
+                return Json(new { success = true, age = age }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, message = "Invalid date format" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult Edit(int id)
